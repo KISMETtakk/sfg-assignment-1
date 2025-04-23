@@ -1,24 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+// App.js
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
+import LogoSection from "./components/logo-section/LogoSection";
+import RoleButtons from "./components/role-button-section/RoleButtons";
+import ImageGrid from "./components/image-grid-section/ImageGrid";
+import StudentLogin from "./components/student-login/StudentLogin"; // Import your login page
+import LectureLogin from "./components/lecture-login/LectureLogin"; // Import your login page
+import AdminLogin from "./components/admin-login/AdminLogin"; // Import your login page
+import "./App.css";
+
+function Home() {
+  return (
+    <div className="app-container">
+      <div className="left-section">
+        <LogoSection />
+        <RoleButtons />
+      </div>
+      <div className="right-section">
+        <ImageGrid />
+      </div>
+    </div>
+  );
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <AnimatePresence mode="wait">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/student-login" element={<StudentLogin />} />
+          <Route path="/lecture-login" element={<LectureLogin />} />          
+          <Route path="/admin-login" element={<AdminLogin />} />
+        </Routes>
+      </AnimatePresence>
+    </Router>
   );
 }
 

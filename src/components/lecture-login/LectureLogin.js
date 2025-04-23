@@ -21,7 +21,7 @@ function StudentLogin() {
         exit={{ x: -100, opacity: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <button className="lecture-login-back-button" onClick={handleBack}>
+        <button className="lecture-login-back-button" onClick={handleack}>
           <FaArrowLeft size={20} />
         </button>
         <div className="lecture-login-card">
