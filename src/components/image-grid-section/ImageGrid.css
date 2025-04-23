@@ -1,0 +1,38 @@
+.image-grid-wrapper {
+  width: 50vw;
+  height: 100vh;
+  position: absolute;
+  right: 0;
+  top: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff; /* Optional: background behind images */
+}
+
+.image-grid {
+  display: grid;
+  grid-template-areas:
+    "img1 img1 img2 img3"
+    "img4 img5 img5 img3"
+    "img6 img6 img5 img3";
+  grid-gap: 10px;
+  width: 90%;
+  height: 90%;
+}
+
+.image-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Assign each image to a grid area */
+.image-grid img:nth-child(1) { grid-area: img1; }
+.image-grid img:nth-child(2) { grid-area: img2; }
+.image-grid img:nth-child(3) { grid-area: img3; }
+.image-grid img:nth-child(4) { grid-area: img4; }
+.image-grid img:nth-child(5) { grid-area: img5; }
+.image-grid img:nth-child(6) { grid-area: img6; }

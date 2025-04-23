@@ -1,0 +1,27 @@
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .role-button {
+    border: none;
+    padding: 18px 60px;
+    border-radius: 50px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .student {
+    background-color: #cd102c;
+  }
+  
+  .lecture {
+    background-color: #013786;
+  }
+  
+  .admin {
+    background-color: #e3b20f;
+  }
+  
