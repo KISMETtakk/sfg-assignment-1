@@ -8,6 +8,7 @@ import ImageGrid from "./components/image-grid-section/ImageGrid";
 import StudentLogin from "./components/student-login/StudentLogin"; // Import your login page
 import LectureLogin from "./components/lecture-login/LectureLogin"; // Import your login page
 import AdminLogin from "./components/admin-login/AdminLogin"; // Import your login page
+import StudentLogged from './components/student-login/StudentLogged'; // Import your login page
 import "./App.css";
 
 function Home() {
@@ -33,6 +34,7 @@ function App() {
           <Route path="/student-login" element={<StudentLogin />} />
           <Route path="/lecture-login" element={<LectureLogin />} />          
           <Route path="/admin-login" element={<AdminLogin />} />
+          <Route path="/student-logged" element={<StudentLogged />} />
         </Routes>
       </AnimatePresence>
     </Router>

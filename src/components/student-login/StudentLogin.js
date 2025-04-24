@@ -30,7 +30,13 @@ function StudentLogin() {
           <input type="text" placeholder="Enter student number" />
           <label>Password</label>
           <input type="password" placeholder="Enter password" />
-          <button className="student-login-login-btn">LOGIN</button>
+          <button
+            className="student-login-login-btn"
+            onClick={() => navigate('/student-logged')}
+          >
+            LOGIN
+          </button>
+
         </div>
       </motion.div>
 
