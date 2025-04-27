@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaArrowLeft } from 'react-icons/fa';
 import './AdminLogin.css';
 import loginImage from '../../components/assets/images/img82.jpg';
 
-function StudentLogin() {
+function AdminLogin() {  // ✅ FIXED: Should be AdminLogin
   const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleBack = () => {
     navigate('/');
+  };
+
+  const handleLogin = () => {
+    // ✅ Simple fake login validation (optional)
+    if (username === 'admin' && password === 'admin123') {
+      navigate('/admin-Dashboard');
+    } else {
+      alert('Invalid Credentials! Please try again.');
+    }
   };
 
   return (
@@ -26,11 +37,24 @@ function StudentLogin() {
         </button>
         <div className="admin-login-card">
           <h2>LOGIN<br /><span>AS AN Admin</span></h2>
+
           <label>Username</label>
-          <input type="text" placeholder="Enter username" />
+          <input
+            type="text"
+            placeholder="Enter username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+
           <label>Password</label>
-          <input type="password" placeholder="Enter password" />
-          <button className="admin-login-btn">LOGIN</button>
+          <input
+            type="password"
+            placeholder="Enter password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <button className="admin-login-btn" onClick={handleLogin}>LOGIN</button> {/* ✅ onClick added */}
         </div>
       </motion.div>
 
@@ -47,4 +71,4 @@ function StudentLogin() {
   );
 }
 
-export default StudentLogin;
+export default AdminLogin;  // ✅ Export AdminLogin not StudentLogin
