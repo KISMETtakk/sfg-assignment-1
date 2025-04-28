@@ -1,0 +1,132 @@
+.admin-dashboard-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9fafb;
+  }
+  
+  .top-navbar {
+    background-color: #1f1a52;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+  }
+  
+  .top-navbar h1 {
+    font-size: 1.8rem;
+  }
+  
+  .top-navbar nav ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .top-navbar nav ul li {
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .top-navbar nav ul li:hover {
+    color: #ffcc00;
+  }
+  
+  .top-navbar nav ul li.logout {
+    color: #ff6b6b;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+  }
+  
+  .cards {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .card {
+    background: white;
+    flex: 1;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: #1f1a52;
+  }
+  
+  .card p {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #4caf50;
+  }
+  
+  .maintenance-section h2,
+  .notifications-section h2 {
+    margin-bottom: 1rem;
+    color: #1f1a52;
+  }
+  
+  table {
+    width: 100%;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  thead {
+    background-color: #1f1a52;
+    color: white;
+  }
+  
+  th, td {
+    padding: 1rem;
+    text-align: left;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f1f5f9;
+  }
+  
+  button {
+    margin-right: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #1f1a52;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  button:hover {
+    background-color: #29235c;
+  }
+  
+  .notification-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .notification-list li {
+    background: white;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  }
+  
