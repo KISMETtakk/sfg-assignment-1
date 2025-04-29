@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaComments, FaCalendarAlt, FaTools, FaEnvelope, FaUser, FaCheckCircle, FaSignOutAlt, FaChevronDown } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import './StudentNavigationBar.css';
 
 const StudentNavigationBar = () => {
@@ -73,10 +74,12 @@ const StudentNavigationBar = () => {
       </div>
 
       <ul className="nav-links">
-        <li className="nav-item">
-          <FaComments className="nav-icon" />
-          <span>Consult With Lecture</span>
-        </li>
+        <Link to="/consult-with-lecture">
+          <li className="nav-item">
+            <FaComments className="nav-icon" />
+            <span>Consult With Lecture</span>
+          </li>
+        </Link>
         <li className="nav-item">
           <FaCalendarAlt className="nav-icon" />
           <span>View Timetable</span>

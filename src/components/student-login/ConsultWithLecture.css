@@ -1,0 +1,266 @@
+.consult-container {
+    display: flex;
+    height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .left-panel, .right-panel {
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .left-panel {
+    flex: 1;
+    background-color: #fff;
+    border-right: 2px solid #cd102c;
+  }
+  
+  .right-panel {
+    flex: 1;
+    background-color: #cd102c;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+    color: #cd102c;
+  }
+  
+  .search-container {
+    position: relative;
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 10px 40px 10px 15px; /* Adjusted padding for icon space */
+    border-radius: 10px;
+    border: 2px solid #ccc;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+  }
+  
+  .search-container .fa-search {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 18px;
+  }
+  
+  /* For responsive design */
+  @media (max-width: 768px) {
+    .search-container {
+      gap: 8px;
+    }
+  
+    .search-input {
+      padding: 10px 30px 10px 10px; /* Adjust padding on smaller screens */
+    }
+  }
+  
+  .lecture-list .lecture-card {
+    background: #e6e6e6;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    justify-content: space-between;
+  }
+  
+  .lecture-card.selected {
+    background-color: #d1d1d1;
+  }
+  
+  .avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .consult-button {
+    background-color: transparent;
+    color: #000;
+    border: 2px solid #cd102c;
+    border-radius: 20px;
+    padding: 5px 15px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .consult-button:hover {
+    background-color: #fff;
+    color: #000;
+  }
+  
+  .schedule-section {
+    background-color: #e9e9e9;
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 20px;
+    position: relative;
+  }
+  
+  .schedule-section h4 {
+    color: #cd102c;
+  }
+  
+  .schedule-consult-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  .module-buttons button {
+    margin: 5px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: none;
+    color: #fff;
+    background-color: #cd102c;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .module-buttons button:hover,
+  .module-buttons .active {
+    background-color: #000;
+    color: #fff;
+  }
+  
+  .date-select {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+  }
+  
+  .date-select select {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .lecture-info {
+    text-align: center;
+  }
+  
+  .profile-pic {
+    width: 80px;
+    height: 80px;
+    border-radius: 15px;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+  
+  .schedule-table {
+    background: #fff;
+    color: #000;
+    border-radius: 15px;
+    padding: 10px 20px; /* Reduced padding */
+    margin: 20px 0;
+    max-height: 600px; /* Make the table smaller */
+    box-sizing: border-box;
+    margin-bottom: 0; /* Remove bottom margin for better alignment */
+  }
+  
+  .date-header {
+    color: #cd102c;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .schedule-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .schedule-table th, .schedule-table td {
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .make-booking input[type="radio"] {
+    appearance: none;
+    border: 2px solid #cd102c;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .make-booking input[type="radio"]:checked::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #cd102c;
+  }
+  
+  .keys {
+    background: #fff;
+    color: #000;
+    border-radius: 15px;
+    padding: 10px;
+    width: 180px;
+    position: absolute; /* Absolute positioning */
+    top: 20px; /* Position it below the lecture info */
+    right: 20px; /* Align to the top right */
+  }
+  
+  .keys .booked, .keys .open {
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+  }
+  
+  .create-booking {
+    background-color: #f1f1f1;
+    color: #000;
+    border: none;
+    border-radius: 15px;
+    padding: 10px 20px;
+    margin: auto;
+    cursor: pointer;
+  }
+  
+  .loader-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .spinner {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #cd102c;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
