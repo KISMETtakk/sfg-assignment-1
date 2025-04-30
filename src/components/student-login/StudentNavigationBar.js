@@ -73,22 +73,7 @@ const StudentNavigationBar = () => {
         )}
       </div>
 
-      <ul className="nav-links">
-        <Link to="/consult-with-lecture">
-          <li className="nav-item">
-            <FaComments className="nav-icon" />
-            <span>Consult With Lecture</span>
-          </li>
-        </Link>
-        <li className="nav-item">
-          <FaCalendarAlt className="nav-icon" />
-          <span>View Timetable</span>
-        </li>
-        <li className="nav-item">
-          <FaTools className="nav-icon" />
-          <span>Report For Maintenance</span>
-        </li>
-      </ul>
+
 
       <div className="logout-wrapper">
         {showWelcome ? (
