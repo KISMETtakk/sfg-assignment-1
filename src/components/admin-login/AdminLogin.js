@@ -5,7 +5,7 @@ import { FaArrowLeft } from 'react-icons/fa';
 import './AdminLogin.css';
 import loginImage from '../../components/assets/images/img82.jpg';
 
-function AdminLogin() {  // ✅ FIXED: Should be AdminLogin
+function AdminLogin() {  
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -15,7 +15,7 @@ function AdminLogin() {  // ✅ FIXED: Should be AdminLogin
   };
 
   const handleLogin = () => {
-    // ✅ Simple fake login validation (optional)
+    
     if (username === 'admin' && password === 'admin123') {
       navigate('/admin-Dashboard');
     } else {
@@ -54,7 +54,7 @@ function AdminLogin() {  // ✅ FIXED: Should be AdminLogin
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button className="admin-login-btn" onClick={handleLogin}>LOGIN</button> {/* ✅ onClick added */}
+          <button className="admin-login-btn" onClick={handleLogin}>LOGIN</button> {}
         </div>
       </motion.div>
 
@@ -71,4 +71,4 @@ function AdminLogin() {  // ✅ FIXED: Should be AdminLogin
   );
 }
 
-export default AdminLogin;  // ✅ Export AdminLogin not StudentLogin
+export default AdminLogin; 
