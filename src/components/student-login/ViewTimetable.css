@@ -1,0 +1,283 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+
+.student-timetable-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f8f8;
+  }
+  
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  
+  
+
+.student-timetable-container {
+  display: flex;
+  width: 100%;
+  max-width: 1000px;
+  height: 500px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: "Roboto", sans-serif;
+  margin: 0 auto;
+}
+
+.student-timetable-left-panel {
+  width: 250px;
+  background-color: white;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid #f0f0f0;
+}
+
+.student-timetable-view-timetable-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.student-timetable-calendar-icon {
+  color: #e6b800;
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.student-timetable-view-timetable-title {
+  color: #e6b800;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.student-timetable-button {
+  width: 100%;
+  padding: 20px 10px;
+  margin-bottom: 20px;
+  background-color: #e6b800;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  line-height: 1.2;
+  transition: all 0.3s ease;
+}
+
+.student-timetable-button:hover {
+  background-color: #d4aa00;
+}
+
+.student-timetable-button.active {
+  background-color: #d4aa00;
+}
+
+.student-timetable-right-panel {
+  flex: 1;
+  background-color: #e6b800;
+  padding: 30px;
+  color: white;
+  overflow-y: auto;
+  position: relative;
+}
+
+.student-timetable-consultation-content {
+  animation: student-timetable-slideInRight 0.5s ease;
+}
+
+.student-timetable-school-timetable-content {
+  animation: student-timetable-slideInRight 0.5s ease;
+}
+
+@keyframes student-timetable-slideInRight {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.student-timetable-calendar-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
+  max-width: 150px;
+}
+
+.student-timetable-nav-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0 10px;
+}
+
+.student-timetable-calendar {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.student-timetable-calendar-row {
+  display: flex;
+  width: 100%;
+}
+
+.student-timetable-calendar-cell {
+  width: calc(100% / 7);
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.student-timetable-day-of-week {
+  font-weight: bold;
+  color: #ff6b6b;
+}
+
+.student-timetable-day {
+  cursor: default;
+  font-weight: 500;
+}
+
+.student-timetable-has-appointment {
+  position: relative;
+  cursor: pointer;
+}
+
+.student-timetable-appointment-dot {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.student-timetable-appointment-details {
+  position: fixed;
+  background-color: white;
+  color: black;
+  border-radius: 10px;
+  padding: 15px;
+  width: 300px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  animation: student-timetable-fadeIn 0.3s ease;
+}
+
+@keyframes student-timetable-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.student-timetable-appointment-details h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: black;
+  font-weight: bold;
+  text-align: center;
+}
+
+.student-timetable-appointment-content {
+  display: flex;
+}
+
+.student-timetable-lecturer-image {
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  border-radius: 5px;
+  margin-right: 15px;
+}
+
+.student-timetable-lecturer-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.student-timetable-appointment-info {
+  flex: 1;
+}
+
+.student-timetable-info-row {
+  display: flex;
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+
+.student-timetable-label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.student-timetable-value {
+  color: #e6b800;
+  font-weight: 500;
+}
+
+.student-timetable-lecturer-name {
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+/* School Timetable Styles */
+.student-timetable-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  color: white;
+}
+
+.student-timetable-table th,
+.student-timetable-table td {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 10px;
+  text-align: center;
+}
+
+.student-timetable-table th {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.student-timetable-has-class {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.student-timetable-class-info {
+  font-size: 12px;
+}
+
+.student-timetable-subject {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.student-timetable-venue {
+  font-size: 10px;
+}

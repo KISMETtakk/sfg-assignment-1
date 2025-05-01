@@ -11,6 +11,7 @@ import AdminLogin from "./components/admin-login/AdminLogin"; // Import your log
 import StudentLogged from './components/student-login/StudentLogged';
 import AdminDashboard from "./components/admin-login/AdminDashboard";
 import ConsultWithLecture from "./components/student-login/ConsultWithLecture";
+import ViewTimetable from "./components/student-login/ViewTimetable";
  // Import your login page
 import "./App.css";
 
@@ -40,6 +41,7 @@ function App() {
           <Route path="/student-logged" element={<StudentLogged />} />
           <Route path = "/admin-Dashboard" element={<AdminDashboard/>}/>
           <Route path = "/consult-with-lecture" element={<ConsultWithLecture/>}/>
+          <Route path = "/view-timetable" element={<ViewTimetable/>}/>
         </Routes>
       </AnimatePresence>
     </Router>
