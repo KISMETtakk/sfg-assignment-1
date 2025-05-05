@@ -26,7 +26,7 @@ const ConsultWithLecture = () => {
   const navigate = useNavigate();
 
   const handleBackToStuDashB = () => {
-    navigate('/student-login');  // Navigate to the student login page
+    navigate('/student-logged');  // Navigate to the student login page
   };
 
   const handleSlotSelection = (index) => {

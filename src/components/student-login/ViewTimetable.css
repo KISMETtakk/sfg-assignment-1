@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: calc(100vh - 100px); /* Adjust for navbar height */
     background-color: #f8f8f8;
   }
   
@@ -45,13 +45,13 @@
 }
 
 .student-timetable-calendar-icon {
-  color: #e6b800;
+  color: #cd102c;
   font-size: 24px;
   margin-right: 10px;
 }
 
 .student-timetable-view-timetable-title {
-  color: #e6b800;
+  color: #cd102c;
   font-weight: bold;
   font-size: 14px;
   text-align: center;
@@ -62,7 +62,7 @@
   width: 100%;
   padding: 20px 10px;
   margin-bottom: 20px;
-  background-color: #e6b800;
+  background-color: #cd102c;
   color: white;
   border: none;
   border-radius: 10px;
@@ -75,16 +75,17 @@
 }
 
 .student-timetable-button:hover {
-  background-color: #d4aa00;
+  background-color: #7f0517;
 }
 
 .student-timetable-button.active {
-  background-color: #d4aa00;
+  background-color: #9e0f25;
 }
+
 
 .student-timetable-right-panel {
   flex: 1;
-  background-color: #e6b800;
+  background-color: #cd102c;
   padding: 30px;
   color: white;
   overflow-y: auto;
@@ -236,7 +237,7 @@
 }
 
 .student-timetable-value {
-  color: #e6b800;
+  color: #cd102c;
   font-weight: 500;
 }
 
@@ -246,23 +247,29 @@
   margin-top: 5px;
 }
 
-/* School Timetable Styles */
-.student-timetable-table {
+/* Transparent School Timetable Styles */
+.student-timetable-timetable-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
   color: white;
+  background-color: transparent;
 }
 
-.student-timetable-table th,
-.student-timetable-table td {
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 10px;
+.student-timetable-timetable-table thead {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.student-timetable-timetable-table th,
+.student-timetable-timetable-table td {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 12px;
   text-align: center;
+  color: white;
 }
 
-.student-timetable-table th {
-  background-color: rgba(0, 0, 0, 0.1);
+.student-timetable-timetable-table tr {
+  background-color: transparent;
 }
 
 .student-timetable-has-class {
@@ -271,13 +278,58 @@
 
 .student-timetable-class-info {
   font-size: 12px;
+  color: white;
 }
 
 .student-timetable-subject {
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
+  color: white;
 }
 
 .student-timetable-venue {
   font-size: 10px;
+  color: white;
+}
+
+.student-timetable-timetable-table th {
+  background-color: #7f0517;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: white;
+}
+
+.student-login-back-button-tt {
+  margin-top: 10vh;
+  padding: 10px 15px;
+  font-size: 16px;
+  
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  
+}
+
+.student-login-back-button-tt {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  background-color: #cd102c;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.4rem;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.student-login-back-button-tt:hover {
+  background-color: #ff0026;
+  transform: rotate(180deg);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
