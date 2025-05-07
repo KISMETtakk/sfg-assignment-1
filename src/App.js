@@ -1,17 +1,17 @@
-// App.js
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import LogoSection from "./components/logo-section/LogoSection";
 import RoleButtons from "./components/role-button-section/RoleButtons";
 import ImageGrid from "./components/image-grid-section/ImageGrid";
-import StudentLogin from "./components/student-login/StudentLogin"; // Import your login page
-import LectureLogin from "./components/lecture-login/LectureLogin"; // Import your login page
-import AdminLogin from "./components/admin-login/AdminLogin"; // Import your login page
+import StudentLogin from "./components/student-login/StudentLogin"; 
+import LectureLogin from "./components/lecture-login/LectureLogin"; 
+import AdminLogin from "./components/admin-login/AdminLogin"; 
 import StudentLogged from './components/student-login/StudentLogged';
 import AdminDashboard from "./components/admin-login/AdminDashboard";
 import ConsultWithLecture from "./components/student-login/ConsultWithLecture";
- // Import your login page
+import ViewTimetable from "./components/student-login/ViewTimetable";
+import MaintainStudent from "./components/student-login/MaintainStudent";
 import "./App.css";
 
 function Home() {
@@ -40,6 +40,8 @@ function App() {
           <Route path="/student-logged" element={<StudentLogged />} />
           <Route path = "/admin-Dashboard" element={<AdminDashboard/>}/>
           <Route path = "/consult-with-lecture" element={<ConsultWithLecture/>}/>
+          <Route path = "/view-timetable" element={<ViewTimetable/>}/>
+          <Route path = "/maintain-student" element={<MaintainStudent/>}/>
         </Routes>
       </AnimatePresence>
     </Router>

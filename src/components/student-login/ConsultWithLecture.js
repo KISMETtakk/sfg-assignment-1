@@ -8,16 +8,27 @@ import SearchP2 from '../assets/images/img34.jpg';
 import SearchP3 from '../assets/images/img82.jpg';
 import QuestionMark from '../assets/images/Question Mark.png';
 import { useNavigate } from 'react-router-dom';  // Import useNavigate
+import { useLayoutEffect } from 'react';
 
 const ConsultWithLecture = () => {
   const [loading, setLoading] = useState(true);
   const [consultSelected, setConsultSelected] = useState(false);
   const [bookedSlots, setBookedSlots] = useState([false, false, false, false, false, false, false]); // Tracks slot bookings
+  const [pageLoaded, setPageLoaded] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1500);
+
+
+
+  // Inside component:
+  useLayoutEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+      setTimeout(() => setPageLoaded(true), 0); // Instant animation start
+    }, 1500);
     return () => clearTimeout(timer);
   }, []);
+  
+  
 
   const handleBack = () => {
     setConsultSelected(false);
@@ -60,17 +71,17 @@ const ConsultWithLecture = () => {
             </button>
       <div className="left-panel">
         
-        <div className="header">
+        <div className={`header ${pageLoaded ? 'slide-in-left delay-1' : ''}`}>
           <FontAwesomeIcon icon={faUserFriends} className="consult-icon" />
           <h3>CONSULT WITH LECTURE</h3>
         </div>
 
-        <div className="search-container">
+        <div className={`search-container ${pageLoaded ? 'slide-in-left delay-2' : ''}`}>
           <input className="search-input" type="text" placeholder="Search Lecture..." />
           <FontAwesomeIcon icon={faSearch} className="search-icon" />
         </div>
 
-        <div className="lecture-list">
+        <div className={`lecture-list ${pageLoaded ? 'slide-in-left delay-3' : ''}`}>
           <div className="lecture-card selected">
             <img src={SearchP1} alt="Matiza Tshiamo" className="avatar" />
             <div>
@@ -100,8 +111,8 @@ const ConsultWithLecture = () => {
 
 
          
-        <h2 className='sca-movedown'>Schedule Consultation Appointment</h2>
-        <div className="schedule-section">
+        <h2 className={`sca-movedown ${pageLoaded ? 'slide-in-left delay-4' : ''}`}>Schedule Consultation Appointment</h2>
+        <div className={`schedule-section ${pageLoaded ? 'slide-in-left delay-5' : ''}`}>
           <h4>Modules:</h4>
           <div className="module-buttons">
             <button>PPA15D</button>
@@ -144,7 +155,7 @@ const ConsultWithLecture = () => {
         
       </div>
 
-      <div className={`right-panel ${consultSelected ? 'show' : 'hide'}`}>
+      <div className={`right-panel ${consultSelected ? 'show' : 'hide'} ${pageLoaded ? 'slide-in-right delay-6' : ''}`}>
         {consultSelected ? (
           <div className="consultation-content fade-in">
             <button className="student-login-back-button" onClick={handleBack}>

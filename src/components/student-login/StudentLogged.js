@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import StudentNavigationBar from './StudentNavigationBar';
 import './StudentLogged.css';
 import { Link } from 'react-router-dom';
 import { FaChalkboardTeacher, FaCalendarAlt, FaTools } from 'react-icons/fa';
 
 const StudentLogged = () => {
+  const [pageReady, setPageReady] = useState(false);
+
+  useLayoutEffect(() => {
+    const timer = setTimeout(() => setPageReady(true), 0);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="student-logged-wrapper">
       <StudentNavigationBar />
@@ -12,7 +19,7 @@ const StudentLogged = () => {
         <div className="card-container">
 
           <Link to="/consult-with-lecture" className="flip-card-link">
-            <div className="flip-card">
+            <div className={`flip-card ${pageReady ? 'fade-slide-up delay-1' : ''}`}>
               <div className="flip-card-inner">
                 <div className="flip-card-front">
                   <FaChalkboardTeacher className="card-icon" />
@@ -26,7 +33,7 @@ const StudentLogged = () => {
           </Link>
 
           <Link to="/view-timetable" className="flip-card-link">
-            <div className="flip-card">
+            <div className={`flip-card ${pageReady ? 'fade-slide-up delay-2' : ''}`}>
               <div className="flip-card-inner">
                 <div className="flip-card-front">
                   <FaCalendarAlt className="card-icon" />
@@ -39,8 +46,8 @@ const StudentLogged = () => {
             </div>
           </Link>
 
-          <Link to="/report-for-maintenance" className="flip-card-link">
-            <div className="flip-card">
+          <Link to="/maintain-student" className="flip-card-link">
+            <div className={`flip-card ${pageReady ? 'fade-slide-up delay-3' : ''}`}>
               <div className="flip-card-inner">
                 <div className="flip-card-front">
                   <FaTools className="card-icon" />
