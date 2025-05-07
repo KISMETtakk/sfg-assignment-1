@@ -1,7 +1,8 @@
 import React, { useLayoutEffect, useState } from 'react';
-import '../student-login/StudentLogin.css'; // Adjust the path as necessary
+import './LectureLogged.css'; // Make sure this path is correct
 import { Link } from 'react-router-dom';
-import { FaChalkboardTeacher, FaCalendarAlt, FaTools } from 'react-icons/fa';
+import { FaChalkboardTeacher, FaCalendarAlt } from 'react-icons/fa';
+import LectureNavigationBar from './LectureNavigationBar';
 
 const StudentLogged = () => {
   const [pageReady, setPageReady] = useState(false);
@@ -12,34 +13,34 @@ const StudentLogged = () => {
   }, []);
 
   return (
-    <div className="student-logged-wrapper">
-      
-      <div className="student-card-section">
-        <div className="card-container">
+    <div className="lecture-student-logged-wrapper">
+      <LectureNavigationBar />
+      <div className="lecture-student-card-section">
+        <div className="lecture-card-container">
 
-          <Link to="/consult-with-lecture" className="flip-card-link">
-            <div className={`flip-card ${pageReady ? 'fade-slide-up delay-1' : ''}`}>
-              <div className="flip-card-inner">
-                <div className="flip-card-front">
-                  <FaChalkboardTeacher className="card-icon" />
+          <Link to="/consult-with-lecture" className="lecture-flip-card-link">
+            <div className={`lecture-flip-card ${pageReady ? 'lecture-fade-slide-up lecture-delay-1' : ''}`}>
+              <div className="lecture-flip-card-inner">
+                <div className="lecture-flip-card-front">
+                  <FaChalkboardTeacher className="lecture-card-icon" />
                   <h3>VIEW CONSULTATIONS</h3>
                 </div>
-                <div className="flip-card-back">
-                    <p>View all the consultations from students</p>
+                <div className="lecture-flip-card-back">
+                  <p>View all the consultations from students</p>
                 </div>
               </div>
             </div>
           </Link>
 
-          <Link to="/view-timetable" className="flip-card-link">
-            <div className={`flip-card ${pageReady ? 'fade-slide-up delay-2' : ''}`}>
-              <div className="flip-card-inner">
-                <div className="flip-card-front">
-                  <FaCalendarAlt className="card-icon" />
+          <Link to="/view-timetable" className="lecture-flip-card-link">
+            <div className={`lecture-flip-card ${pageReady ? 'lecture-fade-slide-up lecture-delay-2' : ''}`}>
+              <div className="lecture-flip-card-inner">
+                <div className="lecture-flip-card-front">
+                  <FaCalendarAlt className="lecture-card-icon" />
                   <h3>REPORT MAINTENANCE</h3>
                 </div>
-                <div className="flip-card-back">
-                <p>Submit issues related to campus facilities and equipment.</p>
+                <div className="lecture-flip-card-back">
+                  <p>Submit issues related to campus facilities and equipment.</p>
                 </div>
               </div>
             </div>
