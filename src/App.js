@@ -8,6 +8,7 @@ import StudentLogin from "./components/student-login/StudentLogin";
 import LectureLogin from "./components/lecture-login/LectureLogin"; 
 import AdminLogin from "./components/admin-login/AdminLogin"; 
 import StudentLogged from './components/student-login/StudentLogged';
+import LectureLogged from './components/lecture-login/LectureLogged';
 import AdminDashboard from "./components/admin-login/AdminDashboard";
 import ConsultWithLecture from "./components/student-login/ConsultWithLecture";
 import ViewTimetable from "./components/student-login/ViewTimetable";
@@ -38,6 +39,7 @@ function App() {
           <Route path="/lecture-login" element={<LectureLogin />} />          
           <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/student-logged" element={<StudentLogged />} />
+          <Route path="/lecture-logged" element={<LectureLogged />} />
           <Route path = "/admin-Dashboard" element={<AdminDashboard/>}/>
           <Route path = "/consult-with-lecture" element={<ConsultWithLecture/>}/>
           <Route path = "/view-timetable" element={<ViewTimetable/>}/>
