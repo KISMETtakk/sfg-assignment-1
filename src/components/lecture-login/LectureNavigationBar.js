@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FaComments, FaCalendarAlt, FaTools, FaEnvelope, FaUser, FaCheckCircle, FaSignOutAlt, FaChevronDown } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { FaEnvelope, FaUser, FaCheckCircle, FaSignOutAlt, FaChevronDown } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom'; // Added useNavigate
 import './LectureNavigationBar.css';
 
 const StudentNavigationBar = () => {
@@ -9,6 +9,7 @@ const StudentNavigationBar = () => {
   const [expandMessage2, setExpandMessage2] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
   const notificationsRef = useRef(null);
+  const navigate = useNavigate(); // Initialize navigate
 
   const handleOutsideClick = (e) => {
     if (notificationsRef.current && !notificationsRef.current.contains(e.target)) {
@@ -31,6 +32,10 @@ const StudentNavigationBar = () => {
     }, 3000);
     return () => clearInterval(toggleWelcome);
   }, []);
+
+  const handleGoHome = () => {
+    navigate('/');
+  };
 
   return (
     <nav className="lecture-student-nav lecture-modern-nav">
@@ -73,7 +78,7 @@ const StudentNavigationBar = () => {
         )}
       </div>
 
-      <div className="lecture-logout-wrapper">
+      <div className="lecture-logout-wrapper" onClick={handleGoHome} style={{ cursor: 'pointer' }}>
         {showWelcome ? (
           <span className="lecture-welcome-message">Welcome Back Tshiamo</span>
         ) : (

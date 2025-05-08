@@ -32,7 +32,7 @@ const StudentLogged = () => {
             </div>
           </Link>
 
-          <Link to="/view-timetable" className="lecture-flip-card-link">
+          <Link to="/maintain-lecture" className="lecture-flip-card-link">
             <div className={`lecture-flip-card ${pageReady ? 'lecture-fade-slide-up lecture-delay-2' : ''}`}>
               <div className="lecture-flip-card-inner">
                 <div className="lecture-flip-card-front">

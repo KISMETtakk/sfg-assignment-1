@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0.75rem 2rem;
-    background: #191769;
+    background: #013786;
     color: white;
     position: relative;
     z-index: 1000;
@@ -48,7 +48,7 @@
     width: 42px;
     height: 42px;
     background: #ffffff;
-    color: #191769;
+    color: #013786;
     border-radius: 50%;
     display: grid;
     place-items: center;
