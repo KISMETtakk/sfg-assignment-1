@@ -1,0 +1,592 @@
+/* Base Styles */
+.lecture-consultation-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: white;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 90px 20px 20px;
+}
+
+.lecture-consultation-loaded {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Left Panel */
+.lecture-consultation-left-panel {
+  width: 40%;
+  padding: 2rem;
+  background-color: white;
+  animation: fadeInLeft 0.8s ease-out forwards;
+}
+
+.lecture-consultation-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.lecture-consultation-icon-container {
+  background-color: #2e3192;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+.lecture-consultation-icon {
+  width: 30px;
+  height: 30px;
+  color: white;
+}
+
+.lecture-consultation-chat-bubble {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  color: white;
+  top: 0;
+  right: 0;
+  transform: translate(5px, -5px);
+  animation: pulse 2s infinite;
+}
+
+.lecture-consultation-title {
+  color: #2e3192;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.lecture-consultation-section-title {
+  color: #2e3192;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.lecture-consultation-appointments-container {
+  background-color: #f5f5f5;
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.lecture-consultation-modules {
+  margin-bottom: 1.5rem;
+}
+
+.lecture-consultation-label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.75rem;
+}
+
+.lecture-consultation-module-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.lecture-consultation-module-button {
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: white;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.lecture-consultation-module-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.lecture-consultation-module-button.lecture-consultation-selected {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  background-color: #000000
+  /* Remove any background color changes on selection to maintain original colors */
+}
+
+.lecture-consultation-ppa {
+  background-color: #0a3d91;
+}
+
+.lecture-consultation-ppg {
+  background-color: #0a3d91;
+}
+
+.lecture-consultation-aop {
+  background-color: #0a3d91;
+}
+
+.lecture-consultation-int {
+  background-color: #0a3d91;
+}
+
+.lecture-consultation-cursor {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: white;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  top: -4px;
+  right: -4px;
+  animation: blink 1s infinite;
+}
+
+.lecture-consultation-date {
+  margin-bottom: 1.5rem;
+}
+
+.lecture-consultation-date-selectors {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.lecture-consultation-select {
+  background-color: #2e3192;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1em;
+  padding-right: 2rem;
+}
+
+.lecture-consultation-select:hover {
+  background-color: #000000;
+  transform: translateY(-2px);
+}
+
+.lecture-consultation-find-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.lecture-consultation-find-button {
+  background-color: white;
+  border: 1px solid #ddd;
+  color: #333;
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.lecture-consultation-find-button:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.lecture-consultation-find-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Right Panel */
+.lecture-consultation-right-panel {
+  width: 60%;
+  background-color: #2e3192;
+  padding: 2rem;
+  color: white;
+  position: relative;
+  animation: slideInRight 0.5s ease-out forwards;
+}
+
+.lecture-consultation-about {
+  margin-bottom: 3rem;
+  padding-right: 220px; /* Add padding to prevent text from going under the keys panel */
+}
+
+.lecture-consultation-about-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.lecture-consultation-about-text {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  max-width: 100%; /* Changed from 90% to be responsive to the padding */
+}
+
+.lecture-consultation-keys {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background-color: white;
+  color: #333;
+  padding: 1rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.8s ease-out 0.4s forwards;
+  opacity: 0;
+  z-index: 10; /* Ensure it's above other elements */
+  max-width: 200px; /* Limit width to prevent overlapping */
+}
+
+.lecture-consultation-keys-title {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.lecture-consultation-key-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.lecture-consultation-key-indicator {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  margin-right: 0.5rem;
+  display: inline-block;
+}
+
+.lecture-consultation-booked {
+  position: relative;
+}
+
+.lecture-consultation-booked::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: #333;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.lecture-consultation-key-text {
+  font-size: 0.875rem;
+}
+
+.lecture-consultation-schedule {
+  background-color: white;
+  color: #333;
+  border-radius: 16px;
+  padding: 2rem;
+  animation: fadeIn 0.8s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+.lecture-consultation-date-display {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.lecture-consultation-calendar-icon {
+  width: 24px;
+  height: 24px;
+  color: #666;
+  margin-right: 0.5rem;
+}
+
+.lecture-consultation-date-text {
+  font-weight: 600;
+}
+
+.lecture-consultation-table {
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.lecture-consultation-table-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  background-color: #2e3192;
+  color: white;
+  padding: 0.75rem;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.lecture-consultation-header-cell {
+  font-weight: 600;
+}
+
+.lecture-consultation-table-body {
+  background-color: white;
+}
+
+.lecture-consultation-table-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  padding: 0.75rem;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s;
+}
+
+.lecture-consultation-table-row:hover {
+  background-color: #f9f9f9;
+}
+
+.lecture-consultation-table-row:last-child {
+  border-bottom: none;
+}
+
+.lecture-consultation-verdict {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.lecture-consultation-accept-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 0.25rem 1rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.lecture-consultation-accept-button:hover {
+  background-color: #3e8e41;
+  transform: scale(1.05);
+}
+
+.lecture-consultation-decline-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 0.25rem 1rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.lecture-consultation-decline-button:hover {
+  background-color: #d32f2f;
+  transform: scale(1.05);
+}
+
+.lecture-consultation-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lecture-consultation-pagination-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.lecture-consultation-pagination-button:hover:not(:disabled) {
+  color: #2e3192;
+  transform: scale(1.1);
+}
+
+.lecture-consultation-pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.lecture-consultation-pagination-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.lecture-consultation-page-indicator {
+  background-color: #ddd;
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.875rem;
+}
+
+/* Question Mark Container */
+.lecture-consultation-question-mark-container {
+  width: 60%;
+  background-color: #2e3192;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.lecture-consultation-question-mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  animation: float 3s ease-in-out infinite;
+}
+
+.lecture-consultation-question-mark svg {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 1.5rem;
+}
+
+.lecture-consultation-question-text {
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Animations */
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(5px, -5px) scale(1);
+  }
+  50% {
+    transform: translate(5px, -5px) scale(1.1);
+  }
+  100% {
+    transform: translate(5px, -5px) scale(1);
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .lecture-consultation-container {
+    flex-direction: column;
+  }
+
+  .lecture-consultation-left-panel,
+  .lecture-consultation-right-panel,
+  .lecture-consultation-question-mark-container {
+    width: 100%;
+  }
+
+  .lecture-consultation-about {
+    padding-right: 0; /* Remove padding on smaller screens */
+  }
+
+  .lecture-consultation-keys {
+    position: static; /* Position normally in the flow on smaller screens */
+    margin-bottom: 1.5rem;
+    max-width: none; /* Allow full width */
+  }
+}
+
+@media (max-width: 768px) {
+  .lecture-consultation-table-header,
+  .lecture-consultation-table-row {
+    grid-template-columns: 1fr;
+  }
+
+  .lecture-consultation-header-cell {
+    padding: 0.5rem 0;
+  }
+
+  .lecture-consultation-cell {
+    padding: 0.5rem 0;
+  }
+
+  .lecture-consultation-verdict {
+    margin-top: 0.5rem;
+  }
+
+  .lecture-consultation-module-buttons {
+    flex-direction: column;
+  }
+}

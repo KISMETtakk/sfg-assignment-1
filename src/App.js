@@ -14,6 +14,8 @@ import ConsultWithLecture from "./components/student-login/ConsultWithLecture";
 import ViewTimetable from "./components/student-login/ViewTimetable";
 import MaintainStudent from "./components/student-login/MaintainStudent";
 import MaintainLecture from "./components/lecture-login/MaintainLecture";
+import LectureConsultation from "./components/lecture-login/LectureConsultation";
+import LogoutConfirmation from "./components/lecture-login/LogoutConfirmation";
 import "./App.css";
 
 function Home() {
@@ -46,6 +48,8 @@ function App() {
           <Route path = "/view-timetable" element={<ViewTimetable/>}/>
           <Route path = "/maintain-student" element={<MaintainStudent/>}/>
           <Route path = "/maintain-lecture" element={<MaintainLecture/>}/>
+          <Route path = "/lecture-consultation" element={<LectureConsultation/>}/>
+          <Route path = "/logout-confirmation" element={<LogoutConfirmation/>}/>
         </Routes>
       </AnimatePresence>
     </Router>

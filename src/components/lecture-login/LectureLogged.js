@@ -18,7 +18,7 @@ const StudentLogged = () => {
       <div className="lecture-student-card-section">
         <div className="lecture-card-container">
 
-          <Link to="/consult-with-lecture" className="lecture-flip-card-link">
+          <Link to="/lecture-consultation" className="lecture-flip-card-link">
             <div className={`lecture-flip-card ${pageReady ? 'lecture-fade-slide-up lecture-delay-1' : ''}`}>
               <div className="lecture-flip-card-inner">
                 <div className="lecture-flip-card-front">
