@@ -34,7 +34,7 @@ const StudentNavigationBar = () => {
   }, []);
 
   const handleGoHome = () => {
-    navigate('/');
+    navigate('/logout-confirmation');
   };
 
   return (

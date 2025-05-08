@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import LogoSection from "./components/logo-section/LogoSection";
@@ -19,8 +19,24 @@ import LogoutConfirmation from "./components/lecture-login/LogoutConfirmation";
 import "./App.css";
 
 function Home() {
+    const [loading, setLoading] = useState(true);  
+
+      useEffect(() => {
+        const timer = setTimeout(() => setLoading(false), 1500);
+        return () => clearTimeout(timer);
+      }, []);
+    
+      if (loading) {
+        return (
+          <div className="loader-container">
+            <div className="spinner-l"></div>
+            <p>Loading...</p>
+          </div>
+        );
+      }
   return (
     <div className="app-container">
+
       <div className="left-section">
         <LogoSection />
         <RoleButtons />
