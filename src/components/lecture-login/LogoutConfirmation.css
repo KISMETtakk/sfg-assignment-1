@@ -1,8 +1,8 @@
 /* Base container */
 .lecture-consultation-logout-container {
-  --primary-color: #6e48aa;
+  --primary-color: #e3b20f;
   --secondary-color: #9d50bb;
-  --accent-color: #ff6b6b;
+  --accent-color: #cd102c;
   --text-color: #f8f9fa;
   --card-bg: rgba(23, 25, 35, 0.9);
   --card-border: rgba(255, 255, 255, 0.1);
@@ -539,12 +539,12 @@
 }
 
 .lecture-consultation-logout-button {
-  background-color: var(--primary-color);
+  background-color: #e3b20f;
   color: white;
 }
 
 .lecture-consultation-logout-button:hover {
-  background-color: var(--button-hover);
+  background-color: #cca627;
 }
 
 /* Responsive adjustments */
