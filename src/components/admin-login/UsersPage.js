@@ -292,7 +292,7 @@ export default function UsersPage() {
             <div className="admin-dash-avatar">
               <User size={20} />
             </div>
-            <span className="admin-dash-username">Admin</span>
+            <span className="admin-dash-username">Logout</span>
           </div>
         </div>
         <button className="admin-dash-menu-toggle" onClick={toggleMobileMenu}>
