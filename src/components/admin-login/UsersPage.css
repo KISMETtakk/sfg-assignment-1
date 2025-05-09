@@ -1,0 +1,315 @@
+.admin-dash-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .admin-dash-tab {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  
+  .admin-dash-tab:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .admin-dash-tab-active {
+    background-color: #f0f2f5;
+    border-color: #d1d5db;
+  }
+  
+  .admin-dash-tab-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+    margin-left: 0.5rem;
+  }
+  
+  .admin-dash-table-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .admin-dash-search-container {
+    position: relative;
+    width: 300px;
+  }
+  
+  .admin-dash-search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+  }
+  
+  .admin-dash-search-input {
+    width: 100%;
+    padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.875rem;
+    transition: var(--transition);
+  }
+  
+  .admin-dash-search-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(227, 178, 15, 0.2);
+  }
+  
+  .admin-dash-action-buttons {
+    display: flex;
+    gap: 0.75rem;
+  }
+  
+  .admin-dash-action-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  
+  .admin-dash-action-button:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .admin-dash-primary-button {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+  }
+  
+  .admin-dash-primary-button:hover {
+    background-color: var(--primary-dark);
+  }
+  
+  .admin-dash-table-container {
+    background-color: var(--card-background);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  
+  .admin-dash-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .admin-dash-table th,
+  .admin-dash-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .admin-dash-table th {
+    background-color: #f9fafb;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--text-light);
+  }
+  
+  .admin-dash-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .admin-dash-checkbox-container {
+    position: relative;
+    width: 18px;
+    height: 18px;
+  }
+  
+  .admin-dash-checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  .admin-dash-checkbox-container label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  
+  .admin-dash-checkbox-container input:checked ~ label {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+  
+  .admin-dash-checkbox-container label:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  
+  .admin-dash-checkbox-container input:checked ~ label:after {
+    display: block;
+  }
+  
+  .admin-dash-user-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .admin-dash-user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #f0f2f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: var(--text-color);
+  }
+  
+  .admin-dash-status {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+  
+  .admin-dash-status-active {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+  }
+  
+  .admin-dash-status-inactive {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+  }
+  
+  .admin-dash-action-icon {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 4px;
+    transition: var(--transition);
+  }
+  
+  .admin-dash-action-icon:hover {
+    background-color: #f0f2f5;
+    color: var(--text-color);
+  }
+  
+  .admin-dash-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  
+  .admin-dash-pagination-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--card-background);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  
+  .admin-dash-pagination-button:hover:not(:disabled) {
+    background-color: #f0f2f5;
+  }
+  
+  .admin-dash-pagination-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .admin-dash-pagination-info {
+    font-size: 0.875rem;
+    color: var(--text-light);
+  }
+  
+  @media (max-width: 1024px) {
+    .admin-dash-table-actions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+  
+    .admin-dash-search-container {
+      width: 100%;
+    }
+  
+    .admin-dash-action-buttons {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .admin-dash-tabs {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  
+    .admin-dash-table {
+      display: block;
+      overflow-x: auto;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .admin-dash-action-buttons {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  
+    .admin-dash-action-button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+  

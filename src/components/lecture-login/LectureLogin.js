@@ -32,7 +32,8 @@ function StudentLogin() {
           <input type="password" placeholder="Enter password" />
           <button className="lecture-login-btn" 
            onClick={() => navigate('/lecture-logged')}>
-            LOGIN</button>
+            LOGIN
+            </button>
   
         </div>
       </motion.div>

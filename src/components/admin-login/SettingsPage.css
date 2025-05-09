@@ -1,0 +1,272 @@
+.admin-dash-settings-container {
+    display: flex;
+    gap: 2rem;
+    background-color: var(--card-background);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  
+  .admin-dash-settings-sidebar {
+    width: 250px;
+    background-color: #f9fafb;
+    padding: 1.5rem 0;
+    border-right: 1px solid var(--border-color);
+  }
+  
+  .admin-dash-settings-tab {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  
+  .admin-dash-settings-tab:hover {
+    background-color: #f0f2f5;
+  }
+  
+  .admin-dash-settings-tab-active {
+    background-color: #e9ecef;
+    color: var(--primary-color);
+    border-left: 3px solid var(--primary-color);
+  }
+  
+  .admin-dash-settings-content {
+    flex: 1;
+    padding: 1.5rem;
+  }
+  
+  .admin-dash-settings-section {
+    display: none;
+  }
+  
+  .admin-dash-settings-section-active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .admin-dash-settings-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 1.5rem 0;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .admin-dash-form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .admin-dash-form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  
+  .admin-dash-input,
+  .admin-dash-textarea,
+  .admin-dash-select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.875rem;
+    background-color: var(--card-background);
+    transition: var(--transition);
+  }
+  
+  .admin-dash-input:focus,
+  .admin-dash-textarea:focus,
+  .admin-dash-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(227, 178, 15, 0.2);
+  }
+  
+  .admin-dash-textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+  
+  .admin-dash-form-help {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-top: 0.5rem;
+  }
+  
+  .admin-dash-toggle-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .admin-dash-toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+  }
+  
+  .admin-dash-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .admin-dash-toggle-label {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+  }
+  
+  .admin-dash-toggle-switch {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  
+  .admin-dash-toggle input:checked + .admin-dash-toggle-label {
+    background-color: var(--primary-color);
+  }
+  
+  .admin-dash-toggle input:checked + .admin-dash-toggle-label .admin-dash-toggle-switch {
+    transform: translateX(26px);
+  }
+  
+  .admin-dash-color-picker {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .admin-dash-color-picker input[type="color"] {
+    width: 50px;
+    height: 40px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 2px;
+    cursor: pointer;
+  }
+  
+  .admin-dash-color-input {
+    flex: 1;
+  }
+  
+  .admin-dash-settings-actions {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .admin-dash-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    border: 1px solid var(--border-color);
+  }
+  
+  .admin-dash-primary-button {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+  }
+  
+  .admin-dash-primary-button:hover {
+    background-color: var(--primary-dark);
+  }
+  
+  .admin-dash-secondary-button {
+    background-color: var(--card-background);
+    color: var(--text-color);
+  }
+  
+  .admin-dash-secondary-button:hover {
+    background-color: #f0f2f5;
+  }
+  
+  .admin-dash-danger-button {
+    background-color: #ef4444;
+    border-color: #ef4444;
+    color: white;
+  }
+  
+  .admin-dash-danger-button:hover {
+    background-color: #dc2626;
+  }
+  
+  @media (max-width: 1024px) {
+    .admin-dash-settings-container {
+      flex-direction: column;
+    }
+  
+    .admin-dash-settings-sidebar {
+      width: 100%;
+      border-right: none;
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 0;
+    }
+  
+    .admin-dash-settings-tab {
+      padding: 0.75rem 1rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .admin-dash-toggle-container {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  
+    .admin-dash-color-picker {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .admin-dash-color-picker input[type="color"] {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .admin-dash-settings-content {
+      padding: 1rem;
+    }
+  }
+  

@@ -1,794 +1,579 @@
-/* Base Styles */
+/* Base container */
 .lecture-consultation-logout-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    width: 100vw;
-    background: linear-gradient(135deg, #0a0a20 0%, #1a1a40 50%, #2e3192 100%);
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    overflow: hidden;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9999;
-    opacity: 0;
-    transform: scale(0.95);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  --primary-color: #6e48aa;
+  --secondary-color: #9d50bb;
+  --accent-color: #ff6b6b;
+  --text-color: #f8f9fa;
+  --card-bg: rgba(23, 25, 35, 0.9);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --button-hover: #8a63d2;
+  --transition-speed: 0.3s;
+  --animation-duration: 20s;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #0f1016 0%, #232741 100%);
+  overflow: hidden;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.lecture-consultation-loaded {
+  opacity: 1;
+}
+
+.lecture-consultation-closing {
+  opacity: 0;
+}
+
+/* Stars background */
+.lecture-consultation-stars,
+.lecture-consultation-stars2,
+.lecture-consultation-stars3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-repeat: repeat;
+  z-index: 0;
+}
+
+.lecture-consultation-stars {
+  background-image: radial-gradient(2px 2px at 20px 30px, #eee, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 40px 70px, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 90px 40px, #fff, rgba(0, 0, 0, 0));
+  background-size: 200px 200px;
+  animation: animateStars var(--animation-duration) linear infinite;
+}
+
+.lecture-consultation-stars2 {
+  background-image: radial-gradient(1px 1px at 100px 150px, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 200px 220px, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 300px 300px, #fff, rgba(0, 0, 0, 0));
+  background-size: 400px 400px;
+  animation: animateStars calc(var(--animation-duration) * 1.5) linear infinite;
+}
+
+.lecture-consultation-stars3 {
+  background-image: radial-gradient(1px 1px at 50px 80px, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 150px 120px, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 250px 250px, #fff, rgba(0, 0, 0, 0));
+  background-size: 300px 300px;
+  animation: animateStars calc(var(--animation-duration) * 0.75) linear infinite;
+}
+
+@keyframes animateStars {
+  from {
+    transform: translateY(0);
   }
-  
-  .lecture-consultation-loaded {
+  to {
+    transform: translateY(200px);
+  }
+}
+
+/* Planets */
+.lecture-consultation-planets {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.lecture-consultation-planet {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(1px);
+}
+
+.planet-1 {
+  top: 15%;
+  left: 10%;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle at 30% 30%, #6b93d6, #3a4e7a);
+  box-shadow: 0 0 20px rgba(107, 147, 214, 0.4);
+  animation: rotatePlanet calc(var(--animation-duration) * 2) linear infinite;
+}
+
+.planet-2 {
+  top: 70%;
+  right: 15%;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle at 40% 40%, #d67b6b, #7a3a3a);
+  box-shadow: 0 0 30px rgba(214, 123, 107, 0.4);
+  animation: rotatePlanet calc(var(--animation-duration) * 3) linear infinite reverse;
+}
+
+.planet-3 {
+  top: 40%;
+  right: 30%;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle at 35% 35%, #d6c36b, #7a6a3a);
+  box-shadow: 0 0 15px rgba(214, 195, 107, 0.4);
+  animation: rotatePlanet calc(var(--animation-duration) * 1.5) linear infinite;
+}
+
+@keyframes rotatePlanet {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Meteors */
+.lecture-consultation-meteor {
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  width: 300px;
+  height: 1px;
+  transform: rotate(-45deg);
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: meteor 10s linear infinite;
+  animation-delay: 2s;
+}
+
+.meteor-2 {
+  top: -100px;
+  left: 20%;
+  width: 200px;
+  animation-delay: 5s;
+  animation-duration: 8s;
+}
+
+@keyframes meteor {
+  0% {
+    transform: translateX(0) translateY(0) rotate(-45deg);
     opacity: 1;
-    transform: scale(1);
   }
-  
-  .lecture-consultation-closing {
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(1000px) translateY(1000px) rotate(-45deg);
     opacity: 0;
-    transform: scale(0.95);
   }
-  
-  /* Stars Animation */
-  .lecture-consultation-stars,
-  .lecture-consultation-stars2,
-  .lecture-consultation-stars3 {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
+}
+
+/* Satellite */
+.lecture-consultation-satellite {
+  position: absolute;
+  top: 20%;
+  right: 20%;
+  animation: orbitSatellite calc(var(--animation-duration) * 2) linear infinite;
+}
+
+.lecture-consultation-satellite-body {
+  width: 30px;
+  height: 15px;
+  background: linear-gradient(to bottom, #d1d1d1, #a1a1a1);
+  border-radius: 4px;
+  position: relative;
+}
+
+.lecture-consultation-satellite-panel {
+  position: absolute;
+  width: 20px;
+  height: 8px;
+  background: linear-gradient(to bottom, #3a7bd5, #3a6073);
+  top: 3px;
+}
+
+.lecture-consultation-satellite-panel.left {
+  left: -22px;
+  border-radius: 2px 0 0 2px;
+}
+
+.lecture-consultation-satellite-panel.right {
+  right: -22px;
+  border-radius: 0 2px 2px 0;
+}
+
+@keyframes orbitSatellite {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
   }
-  
-  .lecture-consultation-stars {
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><circle cx="5" cy="5" r="0.5" fill="white" /></svg>');
-    background-size: 100px 100px;
-    animation: starsAnimation 200s linear infinite;
+  100% {
+    transform: translate(-400px, 200px) rotate(360deg);
   }
-  
-  .lecture-consultation-stars2 {
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><circle cx="5" cy="5" r="0.3" fill="white" /></svg>');
-    background-size: 50px 50px;
-    animation: starsAnimation 150s linear infinite;
+}
+
+/* Particles */
+.lecture-consultation-particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.lecture-consultation-particle {
+  position: absolute;
+  width: var(--size, 2px);
+  height: var(--size, 2px);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  top: var(--top, 50%);
+  left: var(--left, 50%);
+  animation: floatParticle calc(var(--animation-duration) * 0.5) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes floatParticle {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
   }
-  
-  .lecture-consultation-stars3 {
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><circle cx="5" cy="5" r="0.2" fill="white" /></svg>');
-    background-size: 25px 25px;
-    animation: starsAnimation 100s linear infinite;
+  50% {
+    transform: translateY(-20px) translateX(10px);
   }
-  
-  @keyframes starsAnimation {
-    0% {
-      background-position: 0 0;
-    }
-    100% {
-      background-position: 10000px 5000px;
-    }
+}
+
+/* Astronaut Dog */
+.lecture-consultation-astronaut-dog {
+  position: absolute;
+  top: 30%;
+  left: 15%;
+  width: 100px;
+  height: 120px;
+  animation: floatAstronaut 15s ease-in-out infinite;
+}
+
+.lecture-consultation-tether {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  width: 2px;
+  height: 50px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.7));
+}
+
+.lecture-consultation-dog-head {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #f5f5f5;
+  z-index: 2;
+}
+
+.lecture-consultation-helmet {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  top: -5px;
+  left: -5px;
+}
+
+.lecture-consultation-helmet-glass {
+  position: absolute;
+  width: 40px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgba(173, 216, 230, 0.3);
+  top: 10px;
+  left: 10px;
+}
+
+.lecture-consultation-helmet-shine {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.8);
+  top: 15px;
+  left: 15px;
+}
+
+.lecture-consultation-dog-ears {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.lecture-consultation-ear {
+  position: absolute;
+  width: 15px;
+  height: 20px;
+  background-color: #d8d8d8;
+  border-radius: 50%;
+}
+
+.lecture-consultation-ear:first-child {
+  top: -5px;
+  left: 5px;
+  transform: rotate(-30deg);
+}
+
+.lecture-consultation-ear:last-child {
+  top: -5px;
+  right: 5px;
+  transform: rotate(30deg);
+}
+
+.lecture-consultation-dog-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.lecture-consultation-dog-eyes {
+  position: absolute;
+  width: 100%;
+  top: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.lecture-consultation-eye {
+  width: 8px;
+  height: 8px;
+  background-color: #333;
+  border-radius: 50%;
+}
+
+.lecture-consultation-dog-nose {
+  position: absolute;
+  width: 10px;
+  height: 6px;
+  background-color: #333;
+  border-radius: 50%;
+  top: 30px;
+  left: 20px;
+}
+
+.lecture-consultation-dog-mouth {
+  position: absolute;
+  width: 15px;
+  height: 5px;
+  border-bottom: 2px solid #333;
+  border-radius: 50%;
+  top: 38px;
+  left: 18px;
+}
+
+.lecture-consultation-dog-body {
+  position: relative;
+  width: 60px;
+  height: 70px;
+  background-color: #fff;
+  border-radius: 30px;
+  top: -10px;
+  left: -5px;
+}
+
+.lecture-consultation-space-suit {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #f0f0f0;
+  border-radius: 30px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.lecture-consultation-suit-detail {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+}
+
+.lecture-consultation-suit-detail:first-child {
+  top: 15px;
+  left: 10px;
+}
+
+.lecture-consultation-suit-detail:last-child {
+  top: 15px;
+  right: 10px;
+}
+
+.lecture-consultation-oxygen-tank {
+  position: absolute;
+  width: 20px;
+  height: 30px;
+  background-color: #d1d1d1;
+  border-radius: 5px;
+  top: 20px;
+  left: 20px;
+}
+
+.lecture-consultation-dog-legs {
+  position: absolute;
+  width: 100%;
+  bottom: -10px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.lecture-consultation-leg {
+  width: 10px;
+  height: 20px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.lecture-consultation-dog-tail {
+  position: absolute;
+  width: 20px;
+  height: 8px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  bottom: 20px;
+  right: -15px;
+  transform: rotate(-20deg);
+  animation: wagTail 2s ease-in-out infinite;
+}
+
+@keyframes wagTail {
+  0%,
+  100% {
+    transform: rotate(-20deg);
   }
-  
-  /* Twinkling Stars */
-  .lecture-consultation-particles {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
+  50% {
+    transform: rotate(20deg);
   }
-  
-  .lecture-consultation-particle {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    background-color: white;
-    border-radius: 50%;
-    animation: twinkle 5s infinite;
+}
+
+@keyframes floatAstronaut {
+  0%,
+  100% {
+    transform: translateY(0) rotate(5deg);
   }
-  
-  .lecture-consultation-particle:nth-child(1) {
-    top: 10%;
-    left: 20%;
-    animation-delay: 0s;
+  50% {
+    transform: translateY(-30px) rotate(-5deg);
   }
-  .lecture-consultation-particle:nth-child(2) {
-    top: 20%;
-    left: 80%;
-    animation-delay: 0.3s;
+}
+
+/* Logout Card */
+.lecture-consultation-logout-card {
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  background-color: var(--card-bg);
+  border-radius: 16px;
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  animation: cardAppear 0.8s ease-out forwards;
+  transform: translateY(50px);
+  opacity: 0;
+  animation-delay: 0.3s;
+}
+
+@keyframes cardAppear {
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
-  .lecture-consultation-particle:nth-child(3) {
-    top: 30%;
-    left: 45%;
-    animation-delay: 0.6s;
-  }
-  .lecture-consultation-particle:nth-child(4) {
-    top: 40%;
-    left: 15%;
-    animation-delay: 0.9s;
-  }
-  .lecture-consultation-particle:nth-child(5) {
-    top: 50%;
-    left: 90%;
-    animation-delay: 1.2s;
-  }
-  .lecture-consultation-particle:nth-child(6) {
-    top: 60%;
-    left: 35%;
-    animation-delay: 1.5s;
-  }
-  .lecture-consultation-particle:nth-child(7) {
-    top: 70%;
-    left: 75%;
-    animation-delay: 1.8s;
-  }
-  .lecture-consultation-particle:nth-child(8) {
-    top: 80%;
-    left: 55%;
-    animation-delay: 2.1s;
-  }
-  .lecture-consultation-particle:nth-child(9) {
-    top: 90%;
-    left: 25%;
-    animation-delay: 2.4s;
-  }
-  .lecture-consultation-particle:nth-child(10) {
-    top: 15%;
-    left: 65%;
-    animation-delay: 2.7s;
-  }
-  .lecture-consultation-particle:nth-child(11) {
-    top: 25%;
-    left: 5%;
-    animation-delay: 3.0s;
-  }
-  .lecture-consultation-particle:nth-child(12) {
-    top: 35%;
-    left: 95%;
-    animation-delay: 3.3s;
-  }
-  .lecture-consultation-particle:nth-child(13) {
-    top: 45%;
-    left: 50%;
-    animation-delay: 3.6s;
-  }
-  .lecture-consultation-particle:nth-child(14) {
-    top: 55%;
-    left: 10%;
-    animation-delay: 3.9s;
-  }
-  .lecture-consultation-particle:nth-child(15) {
-    top: 65%;
-    left: 85%;
-    animation-delay: 4.2s;
-  }
-  .lecture-consultation-particle:nth-child(16) {
-    top: 75%;
-    left: 40%;
-    animation-delay: 4.5s;
-  }
-  .lecture-consultation-particle:nth-child(17) {
-    top: 85%;
-    left: 70%;
-    animation-delay: 4.8s;
-  }
-  .lecture-consultation-particle:nth-child(18) {
-    top: 95%;
-    left: 30%;
-    animation-delay: 5.1s;
-  }
-  .lecture-consultation-particle:nth-child(19) {
-    top: 5%;
-    left: 60%;
-    animation-delay: 5.4s;
-  }
-  .lecture-consultation-particle:nth-child(20) {
-    top: 15%;
-    left: 35%;
-    animation-delay: 5.7s;
-  }
-  
-  @keyframes twinkle {
-    0%,
-    100% {
-      opacity: 0.2;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 1;
-      transform: scale(1.5);
-      box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.7);
-    }
-  }
-  
-  /* Planets */
-  .lecture-consultation-planets {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-  }
-  
-  .lecture-consultation-planet {
-    position: absolute;
-    border-radius: 50%;
-    box-shadow: inset -10px -10px 20px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
-  }
-  
-  .lecture-consultation-planet.planet-1 {
-    bottom: -50px;
-    right: -50px;
-    width: 150px;
-    height: 150px;
-    background: linear-gradient(45deg, #4a4a8a, #2e3192);
-    opacity: 0.7;
-    animation: planetPulse 15s infinite;
-  }
-  
-  .lecture-consultation-planet.planet-2 {
-    top: -30px;
-    left: 10%;
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(45deg, #a83232, #ff6b6b);
-    opacity: 0.5;
-    animation: planetFloat 20s infinite;
-  }
-  
-  .lecture-consultation-planet.planet-3 {
-    bottom: 20%;
-    left: -30px;
-    width: 100px;
-    height: 100px;
-    background: linear-gradient(45deg, #3a7bd5, #00d2ff);
-    opacity: 0.6;
-    animation: planetRotate 25s infinite linear;
-  }
-  
-  @keyframes planetPulse {
-    0%,
-    100% {
-      transform: scale(1);
-      opacity: 0.7;
-    }
-    50% {
-      transform: scale(1.05);
-      opacity: 0.8;
-    }
-  }
-  
-  @keyframes planetFloat {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-20px);
-    }
-  }
-  
-  @keyframes planetRotate {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  /* Meteor Animation */
-  .lecture-consultation-meteor {
-    position: absolute;
-    top: -100px;
-    left: -100px;
-    width: 300px;
-    height: 2px;
-    background: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 1) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
-    transform: rotate(45deg);
-    animation: meteorFall 8s infinite;
-    opacity: 0;
-    box-shadow: 0 0 10px 1px white;
-  }
-  
-  .lecture-consultation-meteor.meteor-2 {
-    top: -150px;
-    left: 70%;
-    animation: meteorFall 12s infinite 4s;
-  }
-  
-  @keyframes meteorFall {
-    0% {
-      opacity: 0;
-      transform: rotate(45deg) translateX(0) translateY(0);
-    }
-    10%,
-    15% {
-      opacity: 1;
-    }
-    30% {
-      opacity: 0;
-      transform: rotate(45deg) translateX(1000px) translateY(1000px);
-    }
-    100% {
-      opacity: 0;
-      transform: rotate(45deg) translateX(1000px) translateY(1000px);
-    }
-  }
-  
-  /* Satellite Animation */
-  .lecture-consultation-satellite {
-    position: absolute;
-    top: 15%;
-    left: -100px;
-    animation: satelliteFly 30s linear infinite;
-  }
-  
-  .lecture-consultation-satellite-body {
-    width: 30px;
-    height: 15px;
-    background-color: #ccc;
-    border-radius: 5px;
-    position: relative;
-  }
-  
-  .lecture-consultation-satellite-panel {
-    position: absolute;
-    width: 40px;
-    height: 10px;
-    background: linear-gradient(to bottom, #3a7bd5, #00d2ff);
-    border: 1px solid #666;
-  }
-  
-  .lecture-consultation-satellite-panel.left {
-    left: -45px;
-    top: 2px;
-  }
-  
-  .lecture-consultation-satellite-panel.right {
-    right: -45px;
-    top: 2px;
-  }
-  
-  @keyframes satelliteFly {
-    0% {
-      transform: translateX(0) rotate(5deg);
-    }
-    50% {
-      transform: translateX(calc(100vw + 200px)) rotate(-5deg);
-    }
-    50.01% {
-      transform: translateX(calc(100vw + 200px)) rotate(-5deg);
-      opacity: 0;
-    }
-    50.02% {
-      transform: translateX(-100px) rotate(5deg);
-      opacity: 0;
-    }
-    50.1% {
-      opacity: 1;
-    }
-    100% {
-      transform: translateX(calc(100vw + 200px)) rotate(-5deg);
-    }
-  }
-  
-  /* Logout Card */
+}
+
+.lecture-consultation-logout-content {
+  text-align: center;
+}
+
+.lecture-consultation-logout-title {
+  color: var(--text-color);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.lecture-consultation-logout-text {
+  color: var(--text-color);
+  opacity: 0.8;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.lecture-consultation-logout-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.lecture-consultation-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  border: none;
+  outline: none;
+}
+
+.lecture-consultation-close-button {
+  background-color: transparent;
+  color: var(--text-color);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.lecture-consultation-close-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.lecture-consultation-logout-button {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.lecture-consultation-logout-button:hover {
+  background-color: var(--button-hover);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
   .lecture-consultation-logout-card {
-    background-color: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 24px;
-    padding: 3rem;
-    width: 90%;
-    max-width: 500px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    position: relative;
-    z-index: 10;
-    overflow: hidden;
-    animation: cardFloat 6s ease-in-out infinite;
+    padding: 1.5rem;
   }
-  
-  @keyframes cardFloat {
-    0%,
-    100% {
-      transform: translateY(0);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    }
-    50% {
-      transform: translateY(-15px);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-    }
-  }
-  
-  /* Astronaut Dog */
-  .lecture-consultation-astronaut-dog {
-    position: absolute;
-    top: 30%;
-    right: 15%;
-    width: 80px; /* Smaller dog */
-    height: 110px; /* Smaller dog */
-    z-index: 5;
-    animation: dogFloat 15s ease-in-out infinite;
-  }
-  
-  .lecture-consultation-tether {
-    position: absolute;
-    top: -100px;
-    left: 40px;
-    width: 2px;
-    height: 100px;
-    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.7));
-    z-index: 1;
-    transform-origin: bottom center;
-    animation: tetherSway 8s ease-in-out infinite;
-  }
-  
-  @keyframes tetherSway {
-    0%,
-    100% {
-      transform: rotate(5deg);
-    }
-    50% {
-      transform: rotate(-5deg);
-    }
-  }
-  
-  @keyframes dogFloat {
-    0%,
-    100% {
-      transform: translate(0, 0) rotate(5deg);
-    }
-    25% {
-      transform: translate(30px, -30px) rotate(-5deg);
-    }
-    50% {
-      transform: translate(0, -60px) rotate(5deg);
-    }
-    75% {
-      transform: translate(-30px, -30px) rotate(-5deg);
-    }
-  }
-  
-  .lecture-consultation-dog-head {
-    position: relative;
-    width: 45px; /* Smaller dog */
-    height: 45px; /* Smaller dog */
-    background-color: #f5f5f5;
-    border-radius: 50%;
-    z-index: 3;
-  }
-  
-  .lecture-consultation-helmet {
-    position: absolute;
-    top: -7px;
-    left: -7px;
-    width: 60px; /* Smaller dog */
-    height: 60px; /* Smaller dog */
-    background-color: white;
-    border-radius: 50%;
-    border: 2px solid #ccc;
-    z-index: 2;
-  }
-  
-  .lecture-consultation-helmet-glass {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    width: 30px; /* Smaller dog */
-    height: 30px; /* Smaller dog */
-    background-color: rgba(173, 216, 230, 0.5);
-    border-radius: 50%;
-    border: 2px solid #ccc;
-  }
-  
-  .lecture-consultation-helmet-shine {
-    position: absolute;
-    top: 10px;
-    left: 40px;
-    width: 10px; /* Smaller dog */
-    height: 10px; /* Smaller dog */
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 50%;
-  }
-  
-  .lecture-consultation-dog-ears {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: 1;
-  }
-  
-  .lecture-consultation-ear {
-    position: absolute;
-    width: 18px; /* Smaller dog */
-    height: 25px; /* Smaller dog */
-    background-color: #f5f5f5;
-    border-radius: 50%;
-  }
-  
-  .lecture-consultation-ear:first-child {
-    left: 0;
-    transform: rotate(-30deg);
-  }
-  
-  .lecture-consultation-ear:last-child {
-    right: 0;
-    transform: rotate(30deg);
-  }
-  
-  .lecture-consultation-dog-face {
-    position: absolute;
-    top: 15px;
-    left: 10px;
-    width: 25px; /* Smaller dog */
-    height: 25px; /* Smaller dog */
-    z-index: 4;
-  }
-  
-  .lecture-consultation-dog-eyes {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 3px;
-  }
-  
-  .lecture-consultation-eye {
-    width: 6px; /* Smaller dog */
-    height: 6px; /* Smaller dog */
-    background-color: #333;
-    border-radius: 50%;
-    animation: blink 4s infinite;
-  }
-  
-  @keyframes blink {
-    0%,
-    96%,
-    100% {
-      transform: scaleY(1);
-    }
-    98% {
-      transform: scaleY(0.1);
-    }
-  }
-  
-  .lecture-consultation-dog-nose {
-    width: 8px; /* Smaller dog */
-    height: 5px; /* Smaller dog */
-    background-color: #333;
-    border-radius: 50%;
-    margin: 3px auto;
-  }
-  
-  .lecture-consultation-dog-mouth {
-    width: 12px; /* Smaller dog */
-    height: 6px; /* Smaller dog */
-    border-bottom: 2px solid #333;
-    border-radius: 0 0 10px 10px;
-    margin: 0 auto;
-  }
-  
-  .lecture-consultation-dog-body {
-    position: relative;
-    top: -7px;
-    width: 40px; /* Smaller dog */
-    height: 60px; /* Smaller dog */
-    margin: 0 auto;
-    z-index: 2;
-  }
-  
-  .lecture-consultation-space-suit {
-    width: 100%;
-    height: 45px; /* Smaller dog */
-    background-color: #2e3192;
-    border-radius: 15px;
-    position: relative;
-  }
-  
-  .lecture-consultation-suit-detail {
-    position: absolute;
-    width: 12px; /* Smaller dog */
-    height: 12px; /* Smaller dog */
-    background-color: #fff;
-    border-radius: 50%;
-  }
-  
-  .lecture-consultation-suit-detail:first-child {
-    top: 10px;
-    left: 3px;
-  }
-  
-  .lecture-consultation-suit-detail:last-child {
-    top: 10px;
-    right: 3px;
-  }
-  
-  .lecture-consultation-oxygen-tank {
-    position: absolute;
-    top: 7px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 20px; /* Smaller dog */
-    height: 25px; /* Smaller dog */
-    background-color: #ccc;
-    border-radius: 7px;
-    z-index: -1;
-  }
-  
-  .lecture-consultation-dog-legs {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-  
-  .lecture-consultation-leg {
-    width: 10px; /* Smaller dog */
-    height: 20px; /* Smaller dog */
-    background-color: #2e3192;
-    border-radius: 0 0 7px 7px;
-  }
-  
-  .lecture-consultation-dog-tail {
-    position: absolute;
-    bottom: 20px;
-    right: -10px;
-    width: 20px; /* Smaller dog */
-    height: 7px; /* Smaller dog */
-    background-color: #2e3192;
-    border-radius: 5px;
-    transform-origin: left center;
-    animation: tailWag 2s infinite;
-  }
-  
-  @keyframes tailWag {
-    0%,
-    100% {
-      transform: rotate(0deg);
-    }
-    50% {
-      transform: rotate(20deg);
-    }
-  }
-  
-  /* Content */
-  .lecture-consultation-logout-content {
-    position: relative;
-    z-index: 10;
-    text-align: center;
-    color: white;
-  }
-  
+
   .lecture-consultation-logout-title {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    animation: fadeInUp 0.8s ease-out forwards;
-    text-shadow: 0 0 10px rgba(46, 49, 146, 0.7);
+    font-size: 1.25rem;
   }
-  
-  .lecture-consultation-logout-text {
-    font-size: 1.1rem;
-    line-height: 1.5;
-    margin-bottom: 2rem;
-    opacity: 0;
-    animation: fadeInUp 0.8s ease-out 0.2s forwards;
-  }
-  
-  .lecture-consultation-logout-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    opacity: 0;
-    animation: fadeInUp 0.8s ease-out 0.4s forwards;
-  }
-  
+
   .lecture-consultation-button {
-    padding: 0.75rem 1.5rem;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s;
-    border: none;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    position: relative;
-    overflow: hidden;
+    padding: 0.6rem 1.2rem;
   }
-  
-  .lecture-consultation-button:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
+
+  .lecture-consultation-astronaut-dog {
+    top: 20%;
+    left: 10%;
+    transform: scale(0.8);
+  }
+}
+
+@media (max-width: 480px) {
+  .lecture-consultation-logout-buttons {
+    flex-direction: column;
+  }
+
+  .lecture-consultation-button {
     width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: 0.5s;
   }
-  
-  .lecture-consultation-button:hover:before {
-    left: 100%;
-  }
-  
-  .lecture-consultation-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  }
-  
-  .lecture-consultation-button:active {
-    transform: translateY(-1px);
-  }
-  
-  .lecture-consultation-close-button {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-  }
-  
-  .lecture-consultation-close-button:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-  }
-  
-  .lecture-consultation-logout-button {
-    background-color: #f44336;
-    color: white;
-  }
-  
-  .lecture-consultation-logout-button:hover {
-    background-color: #d32f2f;
-  }
-  
-  /* Animations */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .lecture-consultation-logout-card {
-      padding: 2rem;
-    }
-  
-    .lecture-consultation-astronaut-dog {
-      top: 20%;
-      right: 10%;
-    }
-  
-    .lecture-consultation-logout-title {
-      font-size: 1.5rem;
-    }
-  
-    .lecture-consultation-logout-text {
-      font-size: 1rem;
-    }
-  
-    .lecture-consultation-logout-buttons {
-      flex-direction: column;
-    }
-  
-    .lecture-consultation-button {
-      width: 100%;
-      justify-content: center;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .lecture-consultation-astronaut-dog {
-      top: 15%;
-      right: 5%;
-    }
-  }
-  
+}

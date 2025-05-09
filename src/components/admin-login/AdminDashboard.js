@@ -1,286 +1,385 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { FaBell } from "react-icons/fa";
-import "./AdminDashboard.css";
+"use client"
 
-function AdminDashboard() {
-  const navigate = useNavigate();
-  const [activeSection, setActiveSection] = useState("dashboard");
-  const [statusFilter, setStatusFilter] = useState("All");
-  const [showNotifications, setShowNotifications] = useState(false);
-  const [showTimetablePopup, setShowTimetablePopup] = useState(false);
-  const [showLecturerList, setShowLecturerList] = useState(false);
-  const [showStudentCourseSelection, setShowStudentCourseSelection] = useState(false);
-  const [selectedLecturer, setSelectedLecturer] = useState(null);
-  const [selectedCourse, setSelectedCourse] = useState("");
-  const [selectedYear, setSelectedYear] = useState("");
-  const [timetableData, setTimetableData] = useState(null);
-  const [timetableForStudent, setTimetableForStudent] = useState(false); 
+import { useState, useEffect } from "react"
+import { FaSignOutAlt} from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom'; // Added useNavigate
+import {
+  BarChart,
+  PieChart,
+  LineChart,
+  Bar,
+  Pie,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  Cell,
+} from "recharts"
+import { Users, BookOpen, MessageSquare, PenToolIcon as Tool, Menu, X, Home, Settings, Bell, User } from "lucide-react"
+import "./AdminDashboard.css"
 
-  const [issues, setIssues] = useState([
-    { issue: "Projector not working in Room 101", status: "Pending", reportedBy: "Student: Tshiamo" },
-    { issue: "AC not cooling - Building A", status: "In Progress", reportedBy: "Lecturer: Mr Matiza" },
-    { issue: "Water leak in Room 302", status: "Resolved", reportedBy: "Admin: Jane" },
-  ]);
-
-  const lecturers = [
-    { name: "Mr. Matiza", modules: ["INT", "MOB"] },
-    { name: "Ms. Mokoena", modules: ["SFG", "Networks"] },
-  ];
-
-  const courses = ["Computer Science", "Information Technology", "Business Management"];
-  const years = ["First Year", "Second Year", "Third Year", "Last Year"];
-
-  const filteredIssues =
-    statusFilter === "All"
-      ? issues
-      : issues.filter((issue) => issue.status === statusFilter);
-
-  const updateStatus = (index, newStatus) => {
-    const updated = [...issues];
-    updated[index].status = newStatus;
-    setIssues(updated);
+export default function AdminDashboard() {
+  const [isLoading, setIsLoading] = useState(true)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const navigate = useNavigate(); // Initialize navigate
+  const handleGoHome = () => {
+    navigate('/logout-confirmation');
   };
+    const [showWelcome, setShowWelcome] = useState(true);
 
-  const generateTimetable = (modules, user, isStudent = false) => {
-    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-    const dummyTimetable = days.map((day, i) => ({
-      day,
-      session: modules[i % modules.length],
-      time: "10:00 AM - 12:00 PM",
-    }));
-    setTimetableForStudent(isStudent); 
-    setSelectedLecturer(user);
-    setTimetableData(dummyTimetable);
-    setShowLecturerList(false);
-    setShowStudentCourseSelection(false);
-    setShowTimetablePopup(false);
-  };
+  useEffect(() => {
+    // Simulate data loading
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 500)
 
-  const handleUpload = () => {
-    if (timetableForStudent) {
-      alert("Uploading timetable to Student...");
-      
-    } else {
-      alert("Uploading timetable to Lecturer...");
-      
-    }
-  };
+    return () => clearTimeout(timer)
+  }, [])
 
-  const handleLogout = () => {
-    navigate("/admin-login");
-  };
+  // Sample data for the charts
+  const registrationData = [
+    { name: "Students", value: 1250, color: "#cd102c" },
+    { name: "Lecturers", value: 85, color: "#013786" },
+  ]
+
+  const consultationData = [
+    { name: "Requested", value: 320, color: "#cd102c" },
+    { name: "Accepted", value: 275, color: "#013786" },
+  ]
+
+  const maintenanceData = [
+    { name: "Student Requests", value: 145, color: "#cd102c" },
+    { name: "Lecturer Requests", value: 78, color: "#013786" },
+  ]
+
+  const maintenanceStatusData = [
+    { name: "Resolved", value: 156, color: "#e3b20f" },
+    { name: "Pending", value: 67, color: "#8c6b09" },
+  ]
+
+  const monthlyData = [
+    { name: "Jan", students: 850, lecturers: 65, consultations: 180 },
+    { name: "Feb", students: 940, lecturers: 68, consultations: 220 },
+    { name: "Mar", students: 1020, lecturers: 72, consultations: 250 },
+    { name: "Apr", students: 1080, lecturers: 75, consultations: 270 },
+    { name: "May", students: 1150, lecturers: 78, consultations: 290 },
+    { name: "Jun", students: 1250, lecturers: 85, consultations: 320 },
+  ]
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen)
+  }
+    const [isLoaded, setIsLoaded] = useState(false)
+    const [loading, setLoading] = useState(true);  
+
+    useEffect(() => {
+      setIsLoaded(true)
+    }, [])
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="loader-container">
+        <div className="spinner-a"></div>
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
 
   return (
-    <div className="admin-dashboard-container">
-      
-      <header className="top-navbar">
-        <h1>Admin Portal</h1>
-        <nav>
-          <ul>
-            <li onClick={() => { setActiveSection("dashboard"); setTimetableData(null); }}>Dashboard Analytics</li>
-            <li onClick={() => { setActiveSection("maintenance"); setTimetableData(null); }}>Maintenance Reports</li>
-            <li onClick={() => { setShowTimetablePopup(true); }}>Generate Timetable</li>
-            <li onClick={() => setShowNotifications(!showNotifications)} title="Notifications">
-              <FaBell size={18} />
-            </li>
-            <li onClick={handleLogout} className="logout">Logout</li>
-          </ul>
-        </nav>
-      </header>
-
-      <main className="main-content">
-        
-        {timetableData ? (
-          <div className="timetable">
-            <h3>Timetable for {selectedLecturer?.name || `${selectedCourse} - ${selectedYear}`}</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>Day</th>
-                  <th>Module</th>
-                  <th>Time</th>
-                </tr>
-              </thead>
-              <tbody>
-                {timetableData.map((entry, index) => (
-                  <tr key={index}>
-                    <td>{entry.day}</td>
-                    <td>{entry.session}</td>
-                    <td>{entry.time}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <button onClick={handleUpload} className="btn-upload">
-              {timetableForStudent ? "Upload to Student" : "Upload to Lecturer"}
-            </button>
+    <div className={`admin-dash-container ${isLoading ? "" : "admin-dash-loaded"}`}>
+      {/* Navigation */}
+      <nav className="admin-dash-navbar">
+        <div className="admin-dash-logo">
+          <h1>Admin Dashboard</h1>
+        </div>
+        <div className="admin-dash-nav-links">
+          <a href="/admin-dashboard" className="admin-dash-nav-link admin-dash-active">
+            <Home size={20} /> Dashboard
+          </a>
+          {/* <a href="/users-page" className="admin-dash-nav-link">
+            <Users size={20} /> Users
+          </a> */}
+          <a href="/consultations-page" className="admin-dash-nav-link">
+            <MessageSquare size={20} /> Consultations
+          </a>
+          <a href="/maintenance-page" className="admin-dash-nav-link">
+            <Tool size={20} /> Maintenance
+          </a>
+          {/* <a href="/settings-page" className="admin-dash-nav-link">
+            <Settings size={20} /> Settings
+          </a> */}
+        </div>
+        <div className="admin-dash-nav-actions">
+          <button className="admin-dash-icon-button">
+            <Bell size={20} />
+            <span className="admin-dash-notification-badge">3</span>
+          </button>
+          <div className="admin-dash-user-profile" onClick={handleGoHome}>
+            <div className="admin-dash-avatar">
+              <User size={20} />
+            </div>
+            <span className="admin-dash-username">Logout</span>
           </div>
-        ) : (
-          <>
-            {activeSection === "dashboard" && (
-              <>
-                <section className="cards">
-                  <div className="card"><h3>Total Maintenance Reports</h3><p>58</p></div>
-                  <div className="card"><h3>Issues In Progress</h3><p>15</p></div>
-                  <div className="card"><h3>Issues Resolved</h3><p>43</p></div>
-                </section>
-                <button className="btn-report">Generate PDF Report</button>
-              </>
-            )}
 
-            {activeSection === "maintenance" && (
-              <section className="maintenance-section">
-                <h2>Maintenance Issues</h2>
-                <label>
-                  Filter by Status:
-                  <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-                    <option>All</option>
-                    <option>Pending</option>
-                    <option>In Progress</option>
-                    <option>Resolved</option>
-                  </select>
-                </label>
+        </div>
+        <button className="admin-dash-menu-toggle" onClick={toggleMobileMenu}>
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </nav>
 
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Reported Issue</th>
-                      <th>Status</th>
-                      <th>Reported By</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredIssues.map((item, idx) => (
-                      <tr key={idx}>
-                        <td>{item.issue}</td>
-                        <td>{item.status}</td>
-                        <td>{item.reportedBy}</td>
-                        <td>
-                          <button onClick={() => updateStatus(idx, "Resolved")}>Resolved</button>
-                          <button onClick={() => updateStatus(idx, "In Progress")}>In Progress</button>
-                          <button onClick={() => updateStatus(idx, "Pending")}>Pending</button>
-                        </td>
-                      </tr>
+      {/* Mobile Menu */}
+      <div className={`admin-dash-mobile-menu ${isMobileMenuOpen ? "admin-dash-mobile-menu-open" : ""}`}>
+        <a href="/admin-dashboard" className="admin-dash-mobile-link admin-dash-active">
+          <Home size={20} /> Dashboard
+        </a>
+        {/* <a href="/users-page" className="admin-dash-mobile-link">
+          <Users size={20} /> Users
+        </a> */}
+        <a href="/consultations-page" className="admin-dash-mobile-link">
+          <MessageSquare size={20} /> Consultations
+        </a>
+        <a href="/maintenance-page" className="admin-dash-mobile-link">
+          <Tool size={20} /> Maintenance
+        </a>
+        {/* <a href="/settings-page" className="admin-dash-mobile-link">
+          <Settings size={20} /> Settings
+        </a> */}
+      </div>
+
+      {/* Main Content */}
+      <main className="admin-dash-main">
+        <div className="admin-dash-header">
+          <h2>Analytics Overview</h2>
+          <p>Welcome back, Admin! Here's what's happening in your system.</p>
+        </div>
+
+        {/* Summary Cards */}
+        <div className="admin-dash-summary-cards">
+          <div className="admin-dash-card admin-dash-animate-in" style={{ "--delay": "0.1s" }}>
+            <div className="admin-dash-card-icon admin-dash-student-color">
+              <Users size={24} />
+            </div>
+            <div className="admin-dash-card-content">
+              <h3>Students</h3>
+              <p className="admin-dash-card-value">1,250</p>
+              <p className="admin-dash-card-change admin-dash-positive">+12% from last month</p>
+            </div>
+          </div>
+
+          <div className="admin-dash-card admin-dash-animate-in" style={{ "--delay": "0.2s" }}>
+            <div className="admin-dash-card-icon admin-dash-lecturer-color">
+              <BookOpen size={24} />
+            </div>
+            <div className="admin-dash-card-content">
+              <h3>Lecturers</h3>
+              <p className="admin-dash-card-value">85</p>
+              <p className="admin-dash-card-change admin-dash-positive">+5% from last month</p>
+            </div>
+          </div>
+
+          <div className="admin-dash-card admin-dash-animate-in" style={{ "--delay": "0.3s" }}>
+            <div className="admin-dash-card-icon admin-dash-student-color">
+              <MessageSquare size={24} />
+            </div>
+            <div className="admin-dash-card-content">
+              <h3>Consultations</h3>
+              <p className="admin-dash-card-value">320</p>
+              <p className="admin-dash-card-change admin-dash-positive">+8% from last month</p>
+            </div>
+          </div>
+
+          <div className="admin-dash-card admin-dash-animate-in" style={{ "--delay": "0.4s" }}>
+            <div className="admin-dash-card-icon admin-dash-primary-color">
+              <Tool size={24} />
+            </div>
+            <div className="admin-dash-card-content">
+              <h3>Maintenance</h3>
+              <p className="admin-dash-card-value">223</p>
+              <p className="admin-dash-card-change admin-dash-negative">-3% from last month</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Charts Section */}
+        <div className="admin-dash-charts-grid">
+          {/* Registration Chart */}
+          <div className="admin-dash-chart-container admin-dash-animate-in" style={{ "--delay": "0.5s" }}>
+            <div className="admin-dash-chart-header">
+              <h3>Registration Overview</h3>
+              <p>Total users registered on the system</p>
+            </div>
+            <div className="admin-dash-chart">
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={registrationData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#fff",
+                      borderRadius: "8px",
+                      border: "none",
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                    }}
+                  />
+                  <Legend />
+                  <Bar dataKey="value" name="Number of Registrations">
+                    {registrationData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
-                  </tbody>
-                </table>
-              </section>
-            )}
-
-            {showNotifications && (
-              <div className="notification-popup">
-                <h4>Notifications</h4>
-                <div className="notification-toast">
-                  <div className="toast-card info">
-                    <strong>New Report</strong>
-                    <p>Projector not working in Room 101 was submitted.</p>
-                  </div>
-                  <div className="toast-card warning">
-                    <strong>Status Update</strong>
-                    <p>Issue "AC not cooling" marked as In Progress.</p>
-                  </div>
-                  <div className="toast-card success">
-                    <strong>Resolved</strong>
-                    <p>Issue "Water leak in Room 302" has been resolved.</p>
-                  </div>
-                </div>
-              </div>
-            )}
-          </>
-        )}
-
-       
-        {showTimetablePopup && (
-          <div className="popup-overlay">
-            <div className="popup-modal">
-              <h2>Generate Timetable</h2>
-              <p>Select the user type:</p>
-              <div className="popup-buttons">
-                <button onClick={() => setShowLecturerList(true)}>Lecturer</button>
-                <button onClick={() => setShowStudentCourseSelection(true)}>Student</button>
-                <button className="close-btn" onClick={() => setShowTimetablePopup(false)}>Close</button>
-              </div>
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           </div>
-        )}
 
-        {showLecturerList && (
-          <div className="popup-overlay">
-            <div className="popup-modal">
-              <h3>Select Lecturer</h3>
-              <ul>
-                {lecturers.map((lec, idx) => (
-                  <li key={idx}>
-                    <button onClick={() => generateTimetable(lec.modules, lec)}>
-                      {lec.name}
-                    </button>
-                  </li>
-                ))}
-              </ul>
+          {/* Consultation Chart */}
+          <div className="admin-dash-chart-container admin-dash-animate-in" style={{ "--delay": "0.6s" }}>
+            <div className="admin-dash-chart-header">
+              <h3>Consultation Status</h3>
+              <p>Requested vs. Accepted consultations</p>
+            </div>
+            <div className="admin-dash-chart">
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={consultationData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    outerRadius={100}
+                    fill="#8884d8"
+                    dataKey="value"
+                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                  >
+                    {consultationData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#fff",
+                      borderRadius: "8px",
+                      border: "none",
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                    }}
+                  />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
             </div>
           </div>
-        )}
 
-        {showStudentCourseSelection && (
-          <div className="popup-overlay">
-            <div className="popup-modal">
-              <h3>Select Course and Year</h3>
-
-              <label>
-                Course:
-                <select value={selectedCourse} onChange={(e) => setSelectedCourse(e.target.value)}>
-                  <option value="">-- Select Course --</option>
-                  {courses.map((course, idx) => (
-                    <option key={idx} value={course}>{course}</option>
-                  ))}
-                </select>
-              </label>
-
-              <label>
-                Year:
-                <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
-                  <option value="">-- Select Year --</option>
-                  {years.map((year, idx) => (
-                    <option key={idx} value={year}>{year}</option>
-                  ))}
-                </select>
-              </label>
-
-              <button
-                disabled={!selectedCourse || !selectedYear}
-                onClick={() => {
-                  const modules = ["Module A", "Module B", "Module C"]; 
-                  generateTimetable(modules, `${selectedCourse} - ${selectedYear}`, true); // Set isStudent to true
-                  setShowStudentCourseSelection(false);
-                }}
-                style={{ marginTop: "1rem", backgroundColor: "#28a745", color: "white", padding: "0.6rem" }}
-              >
-                Generate Timetable
-              </button>
-
-              <button
-                className="close-btn"
-                onClick={() => setShowStudentCourseSelection(false)}
-                style={{ marginTop: "1rem" }}
-              >
-                Cancel
-              </button>
+          {/* Maintenance Requests Chart */}
+          <div className="admin-dash-chart-container admin-dash-animate-in" style={{ "--delay": "0.7s" }}>
+            <div className="admin-dash-chart-header">
+              <h3>Maintenance Requests</h3>
+              <p>Student vs. Lecturer maintenance requests</p>
+            </div>
+            <div className="admin-dash-chart">
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={maintenanceData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#fff",
+                      borderRadius: "8px",
+                      border: "none",
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                    }}
+                  />
+                  <Legend />
+                  <Bar dataKey="value" name="Number of Requests">
+                    {maintenanceData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           </div>
-        )}
+
+          {/* Maintenance Status Chart */}
+          <div className="admin-dash-chart-container admin-dash-animate-in" style={{ "--delay": "0.8s" }}>
+            <div className="admin-dash-chart-header">
+              <h3>Maintenance Status</h3>
+              <p>Resolved vs. Pending maintenance requests</p>
+            </div>
+            <div className="admin-dash-chart">
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={maintenanceStatusData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    outerRadius={100}
+                    fill="#8884d8"
+                    dataKey="value"
+                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                  >
+                    {maintenanceStatusData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#fff",
+                      borderRadius: "8px",
+                      border: "none",
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                    }}
+                  />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* Monthly Trends Chart */}
+          <div
+            className="admin-dash-chart-container admin-dash-wide admin-dash-animate-in"
+            style={{ "--delay": "0.9s" }}
+          >
+            <div className="admin-dash-chart-header">
+              <h3>Monthly Trends</h3>
+              <p>Registration and consultation trends over time</p>
+            </div>
+            <div className="admin-dash-chart">
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={monthlyData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#fff",
+                      borderRadius: "8px",
+                      border: "none",
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                    }}
+                  />
+                  <Legend />
+                  <Line type="monotone" dataKey="students" stroke="#cd102c" name="Students" activeDot={{ r: 8 }} />
+                  <Line type="monotone" dataKey="lecturers" stroke="#013786" name="Lecturers" />
+                  <Line type="monotone" dataKey="consultations" stroke="#e3b20f" name="Consultations" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
       </main>
     </div>
-  );
+  )
 }
-
-export default AdminDashboard;
-
-
-
-
-
-
-
-

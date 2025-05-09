@@ -16,6 +16,10 @@ import MaintainStudent from "./components/student-login/MaintainStudent";
 import MaintainLecture from "./components/lecture-login/MaintainLecture";
 import LectureConsultation from "./components/lecture-login/LectureConsultation";
 import LogoutConfirmation from "./components/lecture-login/LogoutConfirmation";
+import ConsultationsPage from './components/admin-login/ConsultationPage';
+import MaintenancePage from './components/admin-login/MaintenancePage';
+import SettingsPage from './components/admin-login/SettingsPage';
+import UsersPage from './components/admin-login/UsersPage';
 import "./App.css";
 
 function Home() {
@@ -59,13 +63,18 @@ function App() {
           <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/student-logged" element={<StudentLogged />} />
           <Route path="/lecture-logged" element={<LectureLogged />} />
-          <Route path = "/admin-Dashboard" element={<AdminDashboard/>}/>
+          <Route path = "/admin-dashboard" element={<AdminDashboard/>}/>
           <Route path = "/consult-with-lecture" element={<ConsultWithLecture/>}/>
           <Route path = "/view-timetable" element={<ViewTimetable/>}/>
           <Route path = "/maintain-student" element={<MaintainStudent/>}/>
           <Route path = "/maintain-lecture" element={<MaintainLecture/>}/>
           <Route path = "/lecture-consultation" element={<LectureConsultation/>}/>
           <Route path = "/logout-confirmation" element={<LogoutConfirmation/>}/>
+          <Route path = "/users-page" element={<UsersPage/>}/>
+          <Route path = "/consultations-page" element={<ConsultationsPage/>}/>
+          <Route path = "/maintenance-page" element={<MaintenancePage/>}/>
+          <Route path = "/settings-page" element={<SettingsPage/>}/>
+          
         </Routes>
       </AnimatePresence>
     </Router>
