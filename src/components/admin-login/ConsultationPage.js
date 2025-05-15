@@ -437,8 +437,8 @@ if (loading) {
                 <div className="admin-dash-consultation-actions">
                   {consultation.status === "Pending" && (
                     <>
-                      <button className="admin-dash-consultation-button admin-dash-accept-button">Accept</button>
-                      <button className="admin-dash-consultation-button admin-dash-reject-button">Reject</button>
+                      {/* <button className="admin-dash-consultation-button admin-dash-accept-button">Accept</button>
+                      <button className="admin-dash-consultation-button admin-dash-reject-button">Reject</button> */}
                     </>
                   )}
                   {consultation.status === "Accepted" && (
