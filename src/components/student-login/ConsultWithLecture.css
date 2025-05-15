@@ -434,6 +434,18 @@
   opacity: 0;
   animation: slideInRight 0.6s ease-out forwards;
 }
+* {
+  box-sizing: border-box;
+}
+.lecture-list {
+  max-height: 250px; /* Adjust as needed */
+  overflow-y: auto;
+}
+.schedule-section {
+  margin-top: 40px;
+}
+
+
 
 .delay-1 { animation-delay: 0.2s; }
 .delay-2 { animation-delay: 0.4s; }
