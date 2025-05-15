@@ -37,10 +37,10 @@ const StudentLogged = () => {
               <div className="lecture-flip-card-inner">
                 <div className="lecture-flip-card-front">
                   <FaCalendarAlt className="lecture-card-icon" />
-                  <h3>REPORT MAINTENANCE</h3>
+                  <h3>Time Table</h3>
                 </div>
                 <div className="lecture-flip-card-back">
-                  <p>Submit issues related to campus facilities and equipment.</p>
+                  <p>Access your latest class and exam schedules.</p>
                 </div>
               </div>
             </div>

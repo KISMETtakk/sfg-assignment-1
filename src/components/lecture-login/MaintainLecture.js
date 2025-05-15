@@ -4,35 +4,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWrench } from '@fortawesome/free-solid-svg-icons';
 import StudentNavigationBar from '../lecture-login/LectureNavigationBar';
 import { FaArrowLeft } from "react-icons/fa";
-import ReportImg from "../assets/images/Report2.PNG";
+import axios from 'axios';
 
 const MaintainLecture = () => {
-  const [loading, setLoading] = useState(true);  
-  const [report, setReport] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [timetable, setTimetable] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
   const handleBack = () => {
-    window.history.back(); // or use navigate() if preferred
+    window.history.back();
   };
-  
+
   useEffect(() => {
     setIsLoaded(true);
-  }, []);
+    axios.get('http://localhost:8180/api/timetable/view-all')
+      .then(res => setTimetable(res.data))
+      .catch(err => console.error('Failed to fetch timetable:', err));
 
-  const handleReportChange = (e) => {
-    if (e.target.value.length <= 400) {
-      setReport(e.target.value);
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Report submitted:', report);
-    alert('Report submitted successfully!');
-    setReport('');
-  };
-
-  useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1500);
     return () => clearTimeout(timer);
   }, []);
@@ -46,56 +34,60 @@ const MaintainLecture = () => {
     );
   }
 
+  const generateSchoolTimetable = () => {
+    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+    const times = ["08:00", "09:00", "10:00", "11:00", "12:00"];
+
+    return (
+      <div className="lecture-timetable-content">
+        <h2 className="timetable-title">School Timetable</h2>
+        <table className="lecture-timetable-table">
+          <thead>
+            <tr>
+              <th className="lecture-timetable-th">Time</th>
+              {days.map(day => <th className="lecture-timetable-th" key={day}>{day}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {times.map((time) => (
+              <tr key={time}>
+                <td className="lecture-timetable-td">{time} - {`${parseInt(time) + 1}:00`}</td>
+                {days.map(day => {
+                  const entry = timetable.find(t =>
+                    t.day === day &&
+                    t.startTime?.substring(0, 2) === time.substring(0, 2)
+                  );
+                  return (
+                    <td className="lecture-timetable-td" key={day}>
+                      {entry && (
+                        <div className="lecture-class-info">
+                          <div className="lecture-subject">{entry.module.moduleCode}</div>
+                          <div className="lecture-venue">{entry.lecturer.fname} {entry.lecturer.lname}</div>
+                        </div>
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  };
+
   return (
     <>
       <StudentNavigationBar />
-      <div className={`lecture-main-maintenance-container ${isLoaded ? 'lecture-main-maintenance-loaded' : ''}`}>    
+      <div className={`lecture-main-maintenance-container ${isLoaded ? 'lecture-main-maintenance-loaded' : ''}`}>
         <button className="student-login-back-button-ttt" onClick={handleBack}>
           <FaArrowLeft size={20} />
-        </button>        
+        </button>
 
-        <div className="lecture-main-maintenance-card">
-          <div className="lecture-main-left-section">
-            <div className="lecture-main-icon-container">
-              <FontAwesomeIcon icon={faWrench} className="lecture-main-icon" />
-              <div className="lecture-main-icon-text">REPORT FOR<br />MAINTENANCE</div>
-            </div>
-            
-            <h2 className="lecture-main-title">Write us a report below</h2>
-            <div className="lecture-main-counter">{report.length}/400</div>
-
-            <form onSubmit={handleSubmit}>
-              <textarea 
-                className="lecture-main-textarea"
-                placeholder="Write us here..."
-                value={report}
-                onChange={handleReportChange}
-              />
-              
-              <button 
-                type="submit" 
-                className="lecture-main-submit-btn"
-                disabled={report.trim().length === 0}
-              >
-                Submit Report
-              </button>
-            </form>
-          </div>
-          
-          <div className="lecture-main-right-section">
-            <h1 className="lecture-main-heading">About Consultation Timetable</h1>
-            <h3 className="lecture-main-subheading">Maintenance Report Section</h3>
-            <p className="lecture-main-description">
-              This section helps students to quickly report any maintenance issues, for
-              example, such as broken lights, leaking or damaged facilities. Simply fill in the
-              details, and our maintenance team will attend to it promptly to ensure a safe
-              and functional environment for all.
-            </p>
-            <div
-              className="lecture-main-illustration"
-              style={{ backgroundImage: `url(${ReportImg})` }}
-            ></div>
-          </div>
+        <div className="lecture-main-right-section">
+          <h1 className="lecture-main-heading">School Timetable</h1>
+          <h3 className="lecture-main-subheading">Monday to Friday</h3>
+          {generateSchoolTimetable()}
         </div>
       </div>
     </>

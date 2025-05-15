@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaEnvelope, FaUser, FaCheckCircle, FaSignOutAlt, FaChevronDown } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom'; // Added useNavigate
+import { useNavigate } from 'react-router-dom';
 import './LectureNavigationBar.css';
 
 const StudentNavigationBar = () => {
@@ -9,7 +9,9 @@ const StudentNavigationBar = () => {
   const [expandMessage2, setExpandMessage2] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
   const notificationsRef = useRef(null);
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
+
+  const lecturer = JSON.parse(localStorage.getItem("lecturer"));
 
   const handleOutsideClick = (e) => {
     if (notificationsRef.current && !notificationsRef.current.contains(e.target)) {
@@ -21,9 +23,7 @@ const StudentNavigationBar = () => {
 
   useEffect(() => {
     document.addEventListener('mousedown', handleOutsideClick);
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
   }, []);
 
   useEffect(() => {
@@ -52,25 +52,37 @@ const StudentNavigationBar = () => {
             <div className="lecture-notification-section">
               <div className="lecture-message-preview">
                 <FaUser className="lecture-msg-icon" />
-                <span>Message from <strong>V Mathiza</strong></span>
-                <FaChevronDown className="lecture-dropdown-arrow" onClick={() => setExpandMessage1(!expandMessage1)} />
+                <span>
+                  Message from <strong>{lecturer?.fname} {lecturer?.lname}</strong>
+                </span>
+                <FaChevronDown
+                  className="lecture-dropdown-arrow"
+                  onClick={() => setExpandMessage1(!expandMessage1)}
+                />
               </div>
               {expandMessage1 && (
                 <div className="lecture-message-details">
                   <FaCheckCircle className="lecture-msg-detail-icon" />
-                  <span><strong>V Mathiza</strong> has requested for a consultation scheduled on <strong>23/04/2025</strong> from <strong>13:00 - 13:30</strong> (30 minutes)</span>
+                  <span>
+                    <strong>{lecturer?.fname} {lecturer?.lname}</strong> has requested for a consultation scheduled on <strong>23/04/2025</strong> from <strong>13:00 - 13:30</strong> (30 minutes)
+                  </span>
                 </div>
               )}
 
               <div className="lecture-message-preview">
                 <FaUser className="lecture-msg-icon" />
                 <span>Message from <strong>Admin Office</strong></span>
-                <FaChevronDown className="lecture-dropdown-arrow" onClick={() => setExpandMessage2(!expandMessage2)} />
+                <FaChevronDown
+                  className="lecture-dropdown-arrow"
+                  onClick={() => setExpandMessage2(!expandMessage2)}
+                />
               </div>
               {expandMessage2 && (
                 <div className="lecture-message-details">
                   <FaCheckCircle className="lecture-msg-detail-icon" />
-                  <span>Your maintenance report has been <strong>successfully logged</strong>. A technician will be assigned soon.</span>
+                  <span>
+                    Your maintenance report has been <strong>successfully logged</strong>. A technician will be assigned soon.
+                  </span>
                 </div>
               )}
             </div>
@@ -80,7 +92,9 @@ const StudentNavigationBar = () => {
 
       <div className="lecture-logout-wrapper" onClick={handleGoHome} style={{ cursor: 'pointer' }}>
         {showWelcome ? (
-          <span className="lecture-welcome-message">Welcome Back Tshiamo</span>
+          <span className="lecture-welcome-message">
+            Welcome Back {lecturer?.fname}
+          </span>
         ) : (
           <FaSignOutAlt className="lecture-logout-icon" />
         )}

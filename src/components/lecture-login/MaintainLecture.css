@@ -258,4 +258,68 @@
   .lecture-main-illustration {
     height: 40%;
   }
+  .lecture-timetable-content {
+  margin-top: 20px;
+  animation: lecture-main-fade-in 0.8s ease forwards;
+  animation-delay: 1.2s;
+  opacity: 0;
+}
+
+.timetable-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: white;
+}
+
+.lecture-timetable-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.lecture-timetable-table th,
+.lecture-timetable-table td {
+  padding: 12px 15px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.lecture-timetable-th {
+  background-color: #012b6d;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.lecture-timetable-td {
+  color: white;
+  font-size: 13px;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.lecture-has-class {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.lecture-class-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.lecture-subject {
+  font-weight: 600;
+  font-size: 14px;
+  color: white;
+}
+
+.lecture-venue {
+  font-size: 12px;
+  color: #d2e4ff;
+}
+
 }
