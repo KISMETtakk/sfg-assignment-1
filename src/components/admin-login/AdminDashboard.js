@@ -1,15 +1,13 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { FaSignOutAlt} from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom'; // Added useNavigate
+import { useState, useEffect, useRef } from "react"
+import { FaSignOutAlt } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import {
   BarChart,
   PieChart,
-  LineChart,
   Bar,
   Pie,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -18,73 +16,98 @@ import {
   ResponsiveContainer,
   Cell,
 } from "recharts"
-import { Users, BookOpen, MessageSquare, PenToolIcon as Tool, Menu, X, Home, Settings, Bell, User } from "lucide-react"
+import { Users, BookOpen, MessageSquare, PenToolIcon as Tool, Menu, X, Home, Bell, User } from "lucide-react"
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 import "./AdminDashboard.css"
 
 export default function AdminDashboard() {
   const [isLoading, setIsLoading] = useState(true)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const navigate = useNavigate(); // Initialize navigate
+  const [students, setStudents] = useState([])
+  const [lecturers, setLecturers] = useState([])
+  const [maintenanceIssues, setMaintenanceIssues] = useState([])
+  const [appointments, setAppointments] = useState([])
+  const admin = JSON.parse(localStorage.getItem("admin"))
+  const navigate = useNavigate();
+  const analyticsRef = useRef(null); // Ref for analytics section
+
   const handleGoHome = () => {
     navigate('/logout-confirmation');
   };
-    const [showWelcome, setShowWelcome] = useState(true);
 
   useEffect(() => {
-    // Simulate data loading
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 500)
+    Promise.all([
+      fetch("http://localhost:8180/api/student/get-all").then(res => res.json()),
+      fetch("http://localhost:8180/api/lecturer/get-all").then(res => res.json()),
+      fetch("http://localhost:8180/api/report-issues/get-all").then(res => res.json()),
+      fetch("http://localhost:8180/api/appointment/gellAll-appointments").then(res => res.json()),
+    ])
+      .then(([studentData, lecturerData, maintenanceData, appointmentData]) => {
+        setStudents(studentData || []);
+        setLecturers(lecturerData || []);
+        setMaintenanceIssues(maintenanceData || []);
+        setAppointments(appointmentData || []);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch data:", err);
+        setIsLoading(false);
+      });
+  }, []);
 
-    return () => clearTimeout(timer)
-  }, [])
+  const studentMaintenanceCount = maintenanceIssues.length;
 
-  // Sample data for the charts
+  const consultationPendingCount = appointments.filter(
+    appt => appt.status && appt.status.toLowerCase() === "pending"
+  ).length;
+
+  const consultationAcceptedCount = appointments.filter(
+    appt => appt.status && (appt.status.toLowerCase() === "accept" || appt.status.toLowerCase() === "accepted")
+  ).length;
+
   const registrationData = [
-    { name: "Students", value: 1250, color: "#cd102c" },
-    { name: "Lecturers", value: 85, color: "#013786" },
+    { name: "Students", value: students.length, color: "#cd102c" },
+    { name: "Lecturers", value: lecturers.length, color: "#013786" },
   ]
 
   const consultationData = [
-    { name: "Requested", value: 320, color: "#cd102c" },
-    { name: "Accepted", value: 275, color: "#013786" },
+    { name: "Pending", value: consultationPendingCount, color: "#cd102c" },
+    { name: "Accepted", value: consultationAcceptedCount, color: "#013786" },
   ]
 
   const maintenanceData = [
-    { name: "Student Requests", value: 145, color: "#cd102c" },
-    { name: "Lecturer Requests", value: 78, color: "#013786" },
+    { name: "Student Requests", value: studentMaintenanceCount, color: "#cd102c" }
   ]
 
   const maintenanceStatusData = [
-    { name: "Resolved", value: 156, color: "#e3b20f" },
-    { name: "Pending", value: 67, color: "#8c6b09" },
-  ]
-
-  const monthlyData = [
-    { name: "Jan", students: 850, lecturers: 65, consultations: 180 },
-    { name: "Feb", students: 940, lecturers: 68, consultations: 220 },
-    { name: "Mar", students: 1020, lecturers: 72, consultations: 250 },
-    { name: "Apr", students: 1080, lecturers: 75, consultations: 270 },
-    { name: "May", students: 1150, lecturers: 78, consultations: 290 },
-    { name: "Jun", students: 1250, lecturers: 85, consultations: 320 },
+    { name: "Resolved", value: maintenanceIssues.filter(i => i.status.toLowerCase() === "closed").length, color: "#e3b20f" },
+    { name: "Pending", value: maintenanceIssues.filter(i => i.status.toLowerCase() !== "closed").length, color: "#8c6b09" },
   ]
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }
-    const [isLoaded, setIsLoaded] = useState(false)
-    const [loading, setLoading] = useState(true);  
 
-    useEffect(() => {
-      setIsLoaded(true)
-    }, [])
+  const downloadPDF = () => {
+    if (!analyticsRef.current) return;
 
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1500);
-    return () => clearTimeout(timer);
-  }, []);
+    html2canvas(analyticsRef.current, {
+      scale: 3,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+      scrollY: -window.scrollY, // To capture viewport correctly
+    }).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save('admin-analytics.pdf');
+    });
+  }
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="loader-container">
         <div className="spinner-a"></div>
@@ -93,30 +116,26 @@ export default function AdminDashboard() {
     );
   }
 
-
   return (
-    <div className={`admin-dash-container ${isLoading ? "" : "admin-dash-loaded"}`}>
+    <div className={`admin-dash-container admin-dash-loaded`}>
       {/* Navigation */}
       <nav className="admin-dash-navbar">
         <div className="admin-dash-logo">
-          <h1>Admin Dashboard</h1>
+          <h1>Welcome, {admin?.fname} 👋</h1>
         </div>
         <div className="admin-dash-nav-links">
           <a href="/admin-dashboard" className="admin-dash-nav-link admin-dash-active">
             <Home size={20} /> Dashboard
           </a>
-          {/* <a href="/users-page" className="admin-dash-nav-link">
-            <Users size={20} /> Users
-          </a> */}
           <a href="/consultations-page" className="admin-dash-nav-link">
             <MessageSquare size={20} /> Consultations
           </a>
           <a href="/maintenance-page" className="admin-dash-nav-link">
             <Tool size={20} /> Maintenance
           </a>
-          {/* <a href="/settings-page" className="admin-dash-nav-link">
-            <Settings size={20} /> Settings
-          </a> */}
+          <a href="/timetable-page" className="admin-dash-nav-link">
+            <Tool size={20} /> Timetable
+          </a>
         </div>
         <div className="admin-dash-nav-actions">
           <button className="admin-dash-icon-button">
@@ -129,7 +148,6 @@ export default function AdminDashboard() {
             </div>
             <span className="admin-dash-username">Logout</span>
           </div>
-
         </div>
         <button className="admin-dash-menu-toggle" onClick={toggleMobileMenu}>
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -141,18 +159,12 @@ export default function AdminDashboard() {
         <a href="/admin-dashboard" className="admin-dash-mobile-link admin-dash-active">
           <Home size={20} /> Dashboard
         </a>
-        {/* <a href="/users-page" className="admin-dash-mobile-link">
-          <Users size={20} /> Users
-        </a> */}
         <a href="/consultations-page" className="admin-dash-mobile-link">
           <MessageSquare size={20} /> Consultations
         </a>
         <a href="/maintenance-page" className="admin-dash-mobile-link">
           <Tool size={20} /> Maintenance
         </a>
-        {/* <a href="/settings-page" className="admin-dash-mobile-link">
-          <Settings size={20} /> Settings
-        </a> */}
       </div>
 
       {/* Main Content */}
@@ -162,223 +174,215 @@ export default function AdminDashboard() {
           <p>Welcome back, Admin! Here's what's happening in your system.</p>
         </div>
 
-        {/* Summary Cards */}
-        <div className="admin-dash-summary-cards">
-          <div className="admin-dash-card admin-dash-animate-in" style={{ "--delay": "0.1s" }}>
-            <div className="admin-dash-card-icon admin-dash-student-color">
-              <Users size={24} />
+        {/* Analytics Section to capture */}
+        <div ref={analyticsRef} style={{ padding: '10px', backgroundColor: 'white' }}>
+          {/* Summary Cards */}
+          <div className="admin-dash-summary-cards">
+            <div className="admin-dash-card admin-dash-animate-in" style={{ "--delay": "0.1s" }}>
+              <div className="admin-dash-card-icon admin-dash-student-color">
+                <Users size={24} />
+              </div>
+              <div className="admin-dash-card-content">
+                <h3>Students</h3>
+                <p className="admin-dash-card-value">{students.length.toLocaleString()}</p>
+                
+              </div>
             </div>
-            <div className="admin-dash-card-content">
-              <h3>Students</h3>
-              <p className="admin-dash-card-value">1,250</p>
-              <p className="admin-dash-card-change admin-dash-positive">+12% from last month</p>
-            </div>
-          </div>
 
-          <div className="admin-dash-card admin-dash-animate-in" style={{ "--delay": "0.2s" }}>
-            <div className="admin-dash-card-icon admin-dash-lecturer-color">
-              <BookOpen size={24} />
+            <div className="admin-dash-card admin-dash-animate-in" style={{ "--delay": "0.2s" }}>
+              <div className="admin-dash-card-icon admin-dash-lecturer-color">
+                <BookOpen size={24} />
+              </div>
+              <div className="admin-dash-card-content">
+                <h3>Lecturers</h3>
+                <p className="admin-dash-card-value">{lecturers.length.toLocaleString()}</p>
+             
+              </div>
             </div>
-            <div className="admin-dash-card-content">
-              <h3>Lecturers</h3>
-              <p className="admin-dash-card-value">85</p>
-              <p className="admin-dash-card-change admin-dash-positive">+5% from last month</p>
-            </div>
-          </div>
 
-          <div className="admin-dash-card admin-dash-animate-in" style={{ "--delay": "0.3s" }}>
-            <div className="admin-dash-card-icon admin-dash-student-color">
-              <MessageSquare size={24} />
+            <div className="admin-dash-card admin-dash-animate-in" style={{ "--delay": "0.3s" }}>
+              <div className="admin-dash-card-icon admin-dash-student-color">
+                <MessageSquare size={24} />
+              </div>
+              <div className="admin-dash-card-content">
+                <h3>Consultations</h3>
+                <p className="admin-dash-card-value">{consultationPendingCount + consultationAcceptedCount}</p>
+                
+              </div>
             </div>
-            <div className="admin-dash-card-content">
-              <h3>Consultations</h3>
-              <p className="admin-dash-card-value">320</p>
-              <p className="admin-dash-card-change admin-dash-positive">+8% from last month</p>
-            </div>
-          </div>
 
-          <div className="admin-dash-card admin-dash-animate-in" style={{ "--delay": "0.4s" }}>
-            <div className="admin-dash-card-icon admin-dash-primary-color">
-              <Tool size={24} />
+            <div className="admin-dash-card admin-dash-animate-in" style={{ "--delay": "0.4s" }}>
+              <div className="admin-dash-card-icon admin-dash-primary-color">
+                <Tool size={24} />
+              </div>
+              <div className="admin-dash-card-content">
+                <h3>Maintenance</h3>
+                <p className="admin-dash-card-value">{studentMaintenanceCount}</p>
+             
+              </div>
             </div>
-            <div className="admin-dash-card-content">
-              <h3>Maintenance</h3>
-              <p className="admin-dash-card-value">223</p>
-              <p className="admin-dash-card-change admin-dash-negative">-3% from last month</p>
+            
+          </div>
+          
+
+          {/* Charts Section */}
+          <div className="admin-dash-charts-grid">
+            {/* Registration Chart */}
+            <div className="admin-dash-chart-container admin-dash-animate-in" style={{ "--delay": "0.5s" }}>
+              <div className="admin-dash-chart-header">
+                <h3>Registration Overview</h3>
+                <p>Total users registered on the system</p>
+              </div>
+              <div className="admin-dash-chart">
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={registrationData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: "#fff",
+                        borderRadius: "8px",
+                        border: "none",
+                        boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                      }}
+                    />
+                    <Legend />
+                    <Bar dataKey="value" name="Number of Registrations">
+                      {registrationData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Consultation Chart */}
+            <div className="admin-dash-chart-container admin-dash-animate-in" style={{ "--delay": "0.6s" }}>
+              <div className="admin-dash-chart-header">
+                <h3>Consultation Status</h3>
+                <p>Pending vs. Accepted consultations</p>
+              </div>
+              <div className="admin-dash-chart">
+                <ResponsiveContainer width="100%" height={300}>
+                  <PieChart>
+                    <Pie
+                      data={consultationData}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      outerRadius={100}
+                      fill="#8884d8"
+                      dataKey="value"
+                      label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                    >
+                      {consultationData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: "#fff",
+                        borderRadius: "8px",
+                        border: "none",
+                        boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                      }}
+                    />
+                    <Legend />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Maintenance Requests Chart */}
+            <div className="admin-dash-chart-container admin-dash-animate-in" style={{ "--delay": "0.7s" }}>
+              <div className="admin-dash-chart-header">
+                <h3>Maintenance Requests</h3>
+                <p>Student maintenance requests</p>
+              </div>
+              <div className="admin-dash-chart">
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={maintenanceData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: "#fff",
+                        borderRadius: "8px",
+                        border: "none",
+                        boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                      }}
+                    />
+                    <Legend />
+                    <Bar dataKey="value" name="Number of Requests">
+                      {maintenanceData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Maintenance Status Chart */}
+            <div className="admin-dash-chart-container admin-dash-animate-in" style={{ "--delay": "0.8s" }}>
+              <div className="admin-dash-chart-header">
+                <h3>Maintenance Status</h3>
+                <p>Resolved vs. Pending maintenance requests</p>
+              </div>
+              <div className="admin-dash-chart">
+                <ResponsiveContainer width="100%" height={300}>
+                  <PieChart>
+                    <Pie
+                      data={maintenanceStatusData}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      outerRadius={100}
+                      fill="#8884d8"
+                      dataKey="value"
+                      label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                    >
+                      {maintenanceStatusData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: "#fff",
+                        borderRadius: "8px",
+                        border: "none",
+                        boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                      }}
+                    />
+                    <Legend />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Charts Section */}
-        <div className="admin-dash-charts-grid">
-          {/* Registration Chart */}
-          <div className="admin-dash-chart-container admin-dash-animate-in" style={{ "--delay": "0.5s" }}>
-            <div className="admin-dash-chart-header">
-              <h3>Registration Overview</h3>
-              <p>Total users registered on the system</p>
-            </div>
-            <div className="admin-dash-chart">
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={registrationData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "#fff",
-                      borderRadius: "8px",
-                      border: "none",
-                      boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                    }}
-                  />
-                  <Legend />
-                  <Bar dataKey="value" name="Number of Registrations">
-                    {registrationData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-
-          {/* Consultation Chart */}
-          <div className="admin-dash-chart-container admin-dash-animate-in" style={{ "--delay": "0.6s" }}>
-            <div className="admin-dash-chart-header">
-              <h3>Consultation Status</h3>
-              <p>Requested vs. Accepted consultations</p>
-            </div>
-            <div className="admin-dash-chart">
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={consultationData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    outerRadius={100}
-                    fill="#8884d8"
-                    dataKey="value"
-                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                  >
-                    {consultationData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "#fff",
-                      borderRadius: "8px",
-                      border: "none",
-                      boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                    }}
-                  />
-                  <Legend />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-
-          {/* Maintenance Requests Chart */}
-          <div className="admin-dash-chart-container admin-dash-animate-in" style={{ "--delay": "0.7s" }}>
-            <div className="admin-dash-chart-header">
-              <h3>Maintenance Requests</h3>
-              <p>Student vs. Lecturer maintenance requests</p>
-            </div>
-            <div className="admin-dash-chart">
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={maintenanceData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "#fff",
-                      borderRadius: "8px",
-                      border: "none",
-                      boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                    }}
-                  />
-                  <Legend />
-                  <Bar dataKey="value" name="Number of Requests">
-                    {maintenanceData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-
-          {/* Maintenance Status Chart */}
-          <div className="admin-dash-chart-container admin-dash-animate-in" style={{ "--delay": "0.8s" }}>
-            <div className="admin-dash-chart-header">
-              <h3>Maintenance Status</h3>
-              <p>Resolved vs. Pending maintenance requests</p>
-            </div>
-            <div className="admin-dash-chart">
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={maintenanceStatusData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    outerRadius={100}
-                    fill="#8884d8"
-                    dataKey="value"
-                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                  >
-                    {maintenanceStatusData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "#fff",
-                      borderRadius: "8px",
-                      border: "none",
-                      boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                    }}
-                  />
-                  <Legend />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-
-          {/* Monthly Trends Chart */}
-          <div
-            className="admin-dash-chart-container admin-dash-wide admin-dash-animate-in"
-            style={{ "--delay": "0.9s" }}
-          >
-            <div className="admin-dash-chart-header">
-              <h3>Monthly Trends</h3>
-              <p>Registration and consultation trends over time</p>
-            </div>
-            <div className="admin-dash-chart">
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={monthlyData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "#fff",
-                      borderRadius: "8px",
-                      border: "none",
-                      boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                    }}
-                  />
-                  <Legend />
-                  <Line type="monotone" dataKey="students" stroke="#cd102c" name="Students" activeDot={{ r: 8 }} />
-                  <Line type="monotone" dataKey="lecturers" stroke="#013786" name="Lecturers" />
-                  <Line type="monotone" dataKey="consultations" stroke="#e3b20f" name="Consultations" />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        </div>
+        {/* Moved download button below analytics for clean PDF */}
+        <button
+          onClick={downloadPDF}
+          style={{
+            marginTop: '20px',
+            padding: '10px 20px',
+            backgroundColor: '#cd102c',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+            display: 'block',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          }}
+        >
+          Download Analytics as PDF
+        </button>
       </main>
     </div>
   )

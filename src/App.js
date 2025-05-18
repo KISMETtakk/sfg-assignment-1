@@ -21,6 +21,9 @@ import MaintenancePage from './components/admin-login/MaintenancePage';
 import SettingsPage from './components/admin-login/SettingsPage';
 import UsersPage from './components/admin-login/UsersPage';
 import "./App.css";
+import Timetable from "./components/admin-login/TimetablePage";
+import TimetablePage from './components/admin-login/TimetablePage';
+
 
 function Home() {
     const [loading, setLoading] = useState(true);  
@@ -74,6 +77,8 @@ function App() {
           <Route path = "/consultations-page" element={<ConsultationsPage/>}/>
           <Route path = "/maintenance-page" element={<MaintenancePage/>}/>
           <Route path = "/settings-page" element={<SettingsPage/>}/>
+          <Route path="/timetable-page" element={<TimetablePage />} />
+
           
         </Routes>
       </AnimatePresence>

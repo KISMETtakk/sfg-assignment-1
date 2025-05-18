@@ -39,7 +39,7 @@ const ViewTimetable = () => {
   };
 
   useEffect(() => {
-    axios.get('http://localhost:8180/api/appointment/appointments')
+    axios.get('http://localhost:8180/api/appointment/gellAll-appointments')
       .then(res => setAppointments(res.data))
       .catch(err => console.error('Failed to fetch appointments:', err));
 

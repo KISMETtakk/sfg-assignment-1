@@ -51,14 +51,18 @@ const MaintainLecture = () => {
           <tbody>
             {times.map((time) => (
               <tr key={time}>
-                <td className="lecture-timetable-td">{time} - {`${parseInt(time) + 1}:00`}</td>
+                <td className="lecture-timetable-td" style={{ border: '1px solid white', padding: '12px' }}>{time} - {`${parseInt(time) + 1}:00`}</td>
                 {days.map(day => {
                   const entry = timetable.find(t =>
                     t.day === day &&
                     t.startTime?.substring(0, 2) === time.substring(0, 2)
                   );
                   return (
-                    <td className="lecture-timetable-td" key={day}>
+                    <td
+                      className={`lecture-timetable-td ${entry ? "lecture-has-class" : ""}`}
+                      key={day}
+                      style={{ border: '1px solid white', padding: '12px' }}
+                    >
                       {entry && (
                         <div className="lecture-class-info">
                           <div className="lecture-subject">{entry.module.moduleCode}</div>

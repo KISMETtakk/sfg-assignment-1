@@ -2,29 +2,47 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaArrowLeft } from 'react-icons/fa';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './AdminLogin.css';
 import loginImage from '../../components/assets/images/img82.jpg';
 
-function AdminLogin() {  
+function AdminLogin() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
+  const [adminID, setAdminID] = useState('');
   const [password, setPassword] = useState('');
 
   const handleBack = () => {
     navigate('/');
   };
 
-  const handleLogin = () => {
-    
-    if (username === 'admin' && password === 'admin123') {
-      navigate('/admin-Dashboard');
-    } else {
-      alert('Invalid Credentials! Please try again.');
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post('http://localhost:8180/api/admins/login', {
+        adminID: parseInt(adminID),
+        password: password
+      });
+
+      localStorage.setItem('admin', JSON.stringify(response.data));
+
+      toast.success(`Welcome ${response.data.fname} ${response.data.lname}!`, {
+        position: 'top-center'
+      });
+
+      setTimeout(() => {
+        navigate('/admin-Dashboard');
+      }, 2000); // Give the toast time to show
+    } catch (error) {
+      toast.error('Invalid Admin ID or Password!', {
+        position: 'top-center'
+      });
     }
   };
 
   return (
     <div className="admin-login-page">
+      <ToastContainer />
       <motion.div
         className="admin-login-left-panel"
         initial={{ x: -100, opacity: 0 }}
@@ -38,12 +56,12 @@ function AdminLogin() {
         <div className="admin-login-card">
           <h2>LOGIN<br /><span>AS AN Admin</span></h2>
 
-          <label>Username</label>
+          <label>Admin ID</label>
           <input
-            type="text"
-            placeholder="Enter username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            type="number"
+            placeholder="Enter Admin ID"
+            value={adminID}
+            onChange={(e) => setAdminID(e.target.value)}
           />
 
           <label>Password</label>
@@ -54,7 +72,7 @@ function AdminLogin() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button className="admin-login-btn" onClick={handleLogin}>LOGIN</button> {}
+          <button className="admin-login-btn" onClick={handleLogin}>LOGIN</button>
         </div>
       </motion.div>
 
@@ -71,4 +89,4 @@ function AdminLogin() {
   );
 }
 
-export default AdminLogin; 
+export default AdminLogin;

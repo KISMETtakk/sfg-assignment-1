@@ -100,15 +100,19 @@ const LectureConsultation = () => {
     }
   };
 
-  const updateStatus = async (id, status) => {
-    try {
-      await axios.put(`http://localhost:8180/api/appointment/update-status/${id}?status=${status}`);
-      toast.success(`Status updated to \"${status}\"`);
-    } catch (err) {
-      toast.error("Failed to update status");
-      console.error(err);
-    }
-  };
+const updateStatus = async (id, status) => {
+  try {
+    await axios.put(`http://localhost:8180/api/appointment/update-status/${id}?status=${status}`);
+    toast.success(`Status updated to "${status}"`);
+
+    // Remove the accepted/declined slot from the list
+    setConsultationSlots(prev => prev.filter(slot => slot.appointmentID !== id));
+  } catch (err) {
+    toast.error("Failed to update status");
+    console.error(err);
+  }
+};
+
 
   const handlePrevPage = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
@@ -207,17 +211,7 @@ const LectureConsultation = () => {
               </p>
             </div>
 
-            <div className="lecture-consultation-keys">
-              <h3 className="lecture-consultation-keys-title">Keys</h3>
-              <div className="lecture-consultation-key-item">
-                <span className="lecture-consultation-key-indicator lecture-consultation-booked"></span>
-                <span className="lecture-consultation-key-text">Slot Booked</span>
-              </div>
-              <div className="lecture-consultation-key-item">
-                <span className="lecture-consultation-key-indicator lecture-consultation-open"></span>
-                <span className="lecture-consultation-key-text">Open Booked</span>
-              </div>
-            </div>
+       
 
             <div className="lecture-consultation-schedule">
               <div className="lecture-consultation-date-display">

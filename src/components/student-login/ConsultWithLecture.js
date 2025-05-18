@@ -68,17 +68,28 @@ const ConsultWithLecture = () => {
     setSelectedSlot(index);
   };
 
-  const fetchModulesForLecturer = async (lecturerId) => {
-    try {
-      const lecturer = lecturers.find(l => l.lecturerID === lecturerId);
-      const response = await axios.get(`http://localhost:8180/api/lecturer/modules/${lecturerId}`);
-      setModules(response.data);
-      setSelectedLecturer(lecturer);
-      setConsultSelected(true);
-    } catch (err) {
-      console.error('Error fetching modules:', err);
+ const fetchModulesForLecturer = async (lecturerId) => {
+  try {
+    const lecturer = lecturers.find(l => l.lecturerID === lecturerId);
+    const response = await axios.get(`http://localhost:8180/api/lecturer/modules/${lecturerId}`);
+    const uniqueModules = [];
+    const seenModuleIds = new Set();
+
+    for (const mod of response.data) {
+      if (!seenModuleIds.has(mod.moduleID)) {
+        uniqueModules.push(mod);
+        seenModuleIds.add(mod.moduleID);
+      }
     }
-  };
+
+    setModules(uniqueModules);
+    setSelectedLecturer(lecturer);
+    setConsultSelected(true);
+  } catch (err) {
+    console.error('Error fetching modules:', err);
+  }
+};
+
 
   const monthIndex = {
     January: '01', February: '02', March: '03', April: '04', May: '05', June: '06',

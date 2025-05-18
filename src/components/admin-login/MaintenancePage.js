@@ -9,7 +9,6 @@ import {
   Menu,
   X,
   Home,
-  Settings,
   Bell,
   User,
   Search,
@@ -21,7 +20,6 @@ import {
   AlertTriangle,
   Building,
   Wrench,
-  Plus,
 } from "lucide-react"
 import "./AdminDashboard.css"
 import "./MaintenancePage.css"
@@ -33,180 +31,73 @@ export default function MaintenancePage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedPriority, setSelectedPriority] = useState("all")
+  const [maintenanceData, setMaintenanceData] = useState([])
+  const [updatingIds, setUpdatingIds] = useState([]) // track which IDs are updating
 
-  // Sample data for maintenance requests
-  const maintenanceData = [
-    {
-      id: 1,
-      title: "Broken Projector",
-      location: "Building 10-120",
-      requestedBy: "Tshiamo Matiza",
-      requestType: "Student",
-      date: "2025-05-10",
-      priority: "High",
-      status: "Pending",
-      description: "The projector in Room 101 is not working. It powers on but doesn't display any image.",
-    },
-    {
-      id: 2,
-      title: "Air Conditioning Issue",
-      location: "Building 12-221",
-      requestedBy: "Dr. Zenzo Van Duke",
-      requestType: "Lecturer",
-      date: "2025-05-11",
-      priority: "Medium",
-      status: "In Progress",
-      description: "The air conditioning in Room 205 is making loud noises and not cooling properly.",
-    },
-    {
-      id: 3,
-      title: "Leaking Ceiling",
-      location: "Building 10-G48",
-      requestedBy: "Sipho Zulu",
-      requestType: "Student",
-      date: "2025-05-12",
-      priority: "High",
-      status: "In Progress",
-      description: "There's a water leak from the ceiling in the main hallway of Building C.",
-    },
-    {
-      id: 4,
-      title: "Broken Chair",
-      location: "Building 12-122",
-      requestedBy: "Dr. Mark Thompson",
-      requestType: "Lecturer",
-      date: "2025-05-13",
-      priority: "Low",
-      status: "Resolved",
-      description: "One of the chairs in Room 302 has a broken leg and needs to be replaced.",
-    },
-    {
-      id: 5,
-      title: "Flickering Lights",
-      location: "Building 10-246",
-      requestedBy: "Michael Gucci",
-      requestType: "Student",
-      date: "2025-05-14",
-      priority: "Medium",
-      status: "Pending",
-      description: "The lights in Room 150 are flickering continuously and need to be fixed.",
-    },
-    {
-      id: 6,
-      title: "Broken Window",
-      location: "Building 14-120",
-      requestedBy: "Dr. Jennifer Lee",
-      requestType: "Lecturer",
-      date: "2025-05-15",
-      priority: "High",
-      status: "Pending",
-      description: "A window in Room 210 is cracked and poses a safety hazard.",
-    },
-    {
-      id: 7,
-      title: "Wi-Fi Connectivity Issues",
-      location: "Building 10-G06",
-      requestedBy: "Sibusiso Kubheka",
-      requestType: "Student",
-      date: "2025-05-16",
-      priority: "High",
-      status: "In Progress",
-      description: "The Wi-Fi in the library is very slow and keeps disconnecting.",
-    },
-    {
-      id: 8,
-      title: "Faulty Electrical Outlet",
-      location: "Building 18-107",
-      requestedBy: "Dr. Annah Paulos",
-      requestType: "Lecturer",
-      date: "2025-05-17",
-      priority: "Medium",
-      status: "Resolved",
-      description: "The electrical outlet in Room 405 is not working and needs to be repaired.",
-    },
-    {
-      id: 9,
-      title: "Clogged Sink",
-      location: "Building 18-225",
-      requestedBy: "David Masumula",
-      requestType: "Student",
-      date: "2025-05-18",
-      priority: "Medium",
-      status: "Resolved",
-      description: "The sink in the first-floor restroom of Building A is clogged.",
-    },
-    {
-      id: 10,
-      title: "Damaged Whiteboard",
-      location: "Building 18-228",
-      requestedBy: "Dr. Joseph Matiza",
-      requestType: "Lecturer",
-      date: "2025-05-19",
-      priority: "Low",
-      status: "Pending",
-      description: "The whiteboard in Room 120 is damaged and difficult to write on.",
-    },
-    {
-      id: 11,
-      title: "Heating System Not Working",
-      location: "Building 10-149",
-      requestedBy: "Jessica Xoki",
-      requestType: "Student",
-      date: "2025-05-20",
-      priority: "High",
-      status: "In Progress",
-      description: "The heating system in Room 301 is not working, and the room is very cold.",
-    },
-    {
-      id: 12,
-      title: "Broken Door Handle",
-      location: "Building 10-LG48",
-      requestedBy: "Musa Lebusa",
-      requestType: "Student",
-      date: "2025-05-21",
-      priority: "Medium",
-      status: "Resolved",
-      description: "The door handle in Room 215 is broken and needs to be replaced.",
-    },
-    {
-      id: 13,
-      title: "Water Fountain Leaking",
-      location: "Building 10-LG88",
-      requestedBy: "Wezi Phiri",
-      requestType: "Student",
-      date: "2025-05-22",
-      priority: "Low",
-      status: "Pending",
-      description: "The water fountain in the hallway of Building E is leaking water onto the floor.",
-    },
-    {
-      id: 14,
-      title: "Projector Screen Stuck",
-      location: "Building 20-118",
-      requestedBy: "Ms. Patricia Dube",
-      requestType: "Lecturer",
-      date: "2025-05-23",
-      priority: "Medium",
-      status: "In Progress",
-      description: "The projector screen in Room 110 is stuck and won't retract.",
-    },
-  ]
-
-  // Count maintenance requests by status and type
-  const pendingCount = maintenanceData.filter((m) => m.status === "Pending").length
-  const inProgressCount = maintenanceData.filter((m) => m.status === "In Progress").length
-  const resolvedCount = maintenanceData.filter((m) => m.status === "Resolved").length
-  const studentCount = maintenanceData.filter((m) => m.requestType === "Student").length
-  const lecturerCount = maintenanceData.filter((m) => m.requestType === "Lecturer").length
-
+  // Fetch maintenance data from API on mount
   useEffect(() => {
-    // Simulate data loading
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 500)
-
-    return () => clearTimeout(timer)
+    setIsLoading(true)
+    fetch("http://localhost:8180/api/report-issues/get-all")
+      .then((res) => res.json())
+      .then((data) => {
+        const mappedData = data.map(issue => ({
+          id: issue.issueID,
+          title: issue.issueDescription,
+          location: issue.reportedBy.studentEmail || "Unknown",
+          requestedBy: `${issue.reportedBy.fName || issue.reportedBy.fname} ${issue.reportedBy.lName || issue.reportedBy.lname}`,
+          requestType: "Student",
+          date: issue.reportDate,
+          priority: "Medium",
+          status: issue.status,
+          description: issue.issueDescription,
+          adminInCharge: `${issue.managedBy.fname} ${issue.managedBy.lname}`,
+        }))
+        setMaintenanceData(mappedData)
+        setIsLoading(false)
+      })
+      .catch((err) => {
+        console.error("Failed to fetch maintenance issues:", err)
+        setIsLoading(false)
+      })
   }, [])
+
+  // Update issue status API call
+  const updateIssueStatus = (id, newStatus) => {
+    setUpdatingIds(prev => [...prev, id])
+    fetch(`http://localhost:8180/api/report-issues/${id}/status-feedback?newStatus=${newStatus}`, {
+      method: "PUT",
+      headers: { "Accept": "*/*" },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to update status")
+        return res.text()
+      })
+      .then((msg) => {
+        alert(msg)
+        setMaintenanceData((prev) =>
+          prev.map((issue) =>
+            issue.id === id ? { ...issue, status: newStatus } : issue
+          )
+        )
+      })
+      .catch((err) => alert("Error updating status: " + err.message))
+      .finally(() => {
+        setUpdatingIds(prev => prev.filter(x => x !== id))
+      })
+  }
+
+  // Counts for summary cards
+  const pendingCount = maintenanceData.filter(m =>
+    ["open", "pending"].includes(m.status.toLowerCase())
+  ).length
+  const inProgressCount = maintenanceData.filter(m =>
+    m.status.toLowerCase() === "in progress"
+  ).length
+  const resolvedCount = maintenanceData.filter(m =>
+    ["closed", "resolved"].includes(m.status.toLowerCase())
+  ).length
+  const studentCount = maintenanceData.filter(m => m.requestType === "Student").length
+  const lecturerCount = maintenanceData.filter(m => m.requestType === "Lecturer").length
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
@@ -227,7 +118,7 @@ export default function MaintenancePage() {
     setCurrentPage(1)
   }
 
-  // Filter and paginate data
+  // Filter and paginate
   const filteredData = maintenanceData.filter(
     (request) =>
       (activeTab === "all" ||
@@ -237,7 +128,7 @@ export default function MaintenancePage() {
       (selectedPriority === "all" || request.priority.toLowerCase() === selectedPriority.toLowerCase()) &&
       (request.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         request.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        request.requestedBy.toLowerCase().includes(searchQuery.toLowerCase())),
+        request.requestedBy.toLowerCase().includes(searchQuery.toLowerCase()))
   )
 
   const itemsPerPage = 6
@@ -245,7 +136,7 @@ export default function MaintenancePage() {
   const startIndex = (currentPage - 1) * itemsPerPage
   const paginatedData = filteredData.slice(startIndex, startIndex + itemsPerPage)
 
-  // Get priority class
+  // Priority class
   const getPriorityClass = (priority) => {
     switch (priority.toLowerCase()) {
       case "high":
@@ -259,43 +150,34 @@ export default function MaintenancePage() {
     }
   }
 
-  // Get status class
+  // Status class
   const getStatusClass = (status) => {
     switch (status.toLowerCase().replace(" ", "-")) {
+      case "open":
       case "pending":
         return "admin-dash-status-pending"
       case "in-progress":
         return "admin-dash-status-in-progress"
+      case "closed":
       case "resolved":
+      case "completed":
         return "admin-dash-status-resolved"
       default:
         return ""
     }
   }
 
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [loading, setLoading] = useState(true);  
-
-  useEffect(() => {
-    setIsLoaded(true)
-  }, [])
-
-useEffect(() => {
-  const timer = setTimeout(() => setLoading(false), 1500);
-  return () => clearTimeout(timer);
-}, []);
-
-if (loading) {
-  return (
-    <div className="loader-container">
-      <div className="spinner-a"></div>
-      <p>Loading...</p>
-    </div>
-  );
-}
+  if (isLoading) {
+    return (
+      <div className="loader-container">
+        <div className="spinner-a"></div>
+        <p>Loading...</p>
+      </div>
+    )
+  }
 
   return (
-    <div className={`admin-dash-container ${isLoading ? "" : "admin-dash-loaded"}`}>
+    <div className={`admin-dash-container admin-dash-loaded`}>
       {/* Navigation */}
       <nav className="admin-dash-navbar">
         <div className="admin-dash-logo">
@@ -305,18 +187,12 @@ if (loading) {
           <a href="/admin-dashboard" className="admin-dash-nav-link">
             <Home size={20} /> Dashboard
           </a>
-          {/* <a href="users-page" className="admin-dash-nav-link">
-            <Users size={20} /> Users
-          </a> */}
-          <a href="consultations-page" className="admin-dash-nav-link">
+          <a href="/consultations-page" className="admin-dash-nav-link">
             <MessageSquare size={20} /> Consultations
           </a>
-          <a href="maintenance-page" className="admin-dash-nav-link admin-dash-active">
+          <a href="/maintenance-page" className="admin-dash-nav-link admin-dash-active">
             <Tool size={20} /> Maintenance
           </a>
-          {/* <a href="settings-page" className="admin-dash-nav-link">
-            <Settings size={20} /> Settings
-          </a> */}
         </div>
         <div className="admin-dash-nav-actions">
           <button className="admin-dash-icon-button">
@@ -340,18 +216,12 @@ if (loading) {
         <a href="admin-dashboard" className="admin-dash-mobile-link">
           <Home size={20} /> Dashboard
         </a>
-        {/* <a href="users-page" className="admin-dash-mobile-link">
-          <Users size={20} /> Users
-        </a> */}
         <a href="consultations-page" className="admin-dash-mobile-link">
           <MessageSquare size={20} /> Consultations
         </a>
         <a href="maintenance-page" className="admin-dash-mobile-link admin-dash-active">
           <Tool size={20} /> Maintenance
         </a>
-        {/* <a href="settings-page" className="admin-dash-mobile-link">
-          <Settings size={20} /> Settings
-        </a> */}
       </div>
 
       {/* Main Content */}
@@ -373,15 +243,7 @@ if (loading) {
             </div>
           </div>
 
-          <div className="admin-dash-card">
-            <div className="admin-dash-card-icon admin-dash-lecturer-color">
-              <BookOpen size={24} />
-            </div>
-            <div className="admin-dash-card-content">
-              <h3>Lecturer Requests</h3>
-              <p className="admin-dash-card-value">{lecturerCount}</p>
-            </div>
-          </div>
+         
 
           <div className="admin-dash-card">
             <div className="admin-dash-card-icon admin-dash-primary-color">
@@ -413,41 +275,10 @@ if (loading) {
             <Wrench size={18} />
             All Requests
           </button>
-          <button
-            className={`admin-dash-tab ${activeTab === "pending" ? "admin-dash-tab-active" : ""}`}
-            onClick={() => handleTabChange("pending")}
-          >
-            <Clock size={18} />
-            Pending
-          </button>
-          <button
-            className={`admin-dash-tab ${activeTab === "in progress" ? "admin-dash-tab-active" : ""}`}
-            onClick={() => handleTabChange("in progress")}
-          >
-            <Tool size={18} />
-            In Progress
-          </button>
-          <button
-            className={`admin-dash-tab ${activeTab === "resolved" ? "admin-dash-tab-active" : ""}`}
-            onClick={() => handleTabChange("resolved")}
-          >
-            <CheckCircle size={18} />
-            Resolved
-          </button>
-          <button
-            className={`admin-dash-tab ${activeTab === "student" ? "admin-dash-tab-active" : ""}`}
-            onClick={() => handleTabChange("student")}
-          >
-            <Users size={18} />
-            Student
-          </button>
-          <button
-            className={`admin-dash-tab ${activeTab === "lecturer" ? "admin-dash-tab-active" : ""}`}
-            onClick={() => handleTabChange("lecturer")}
-          >
-            <BookOpen size={18} />
-            Lecturer
-          </button>
+          
+        
+        
+          
         </div>
 
         {/* Search and Filter */}
@@ -463,9 +294,7 @@ if (loading) {
             />
           </div>
 
-
-        </div>
-        <div className="admin-dash-filter-container">
+          <div className="admin-dash-filter-container">
             <label htmlFor="priority-filter">Priority:</label>
             <select
               id="priority-filter"
@@ -479,6 +308,7 @@ if (loading) {
               <option value="low">Low</option>
             </select>
           </div>
+        </div>
 
         {/* Maintenance Requests */}
         <div className="admin-dash-maintenance-grid admin-dash-animate-in" style={{ "--delay": "0.5s" }}>
@@ -515,15 +345,24 @@ if (loading) {
                   <p>{request.description}</p>
                 </div>
                 <div className="admin-dash-maintenance-actions">
-                  {request.status === "Pending" && (
-                    <button className="admin-dash-maintenance-button admin-dash-start-button">Start Work</button>
-                  )}
-                  {request.status === "In Progress" && (
-                    <button className="admin-dash-maintenance-button admin-dash-complete-button">
-                      Mark as Resolved
+                  {(request.status.toLowerCase() === "open" || request.status.toLowerCase() === "pending") && (
+                    <button
+                      disabled={updatingIds.includes(request.id)}
+                      className="admin-dash-maintenance-button admin-dash-start-button"
+                      onClick={() => updateIssueStatus(request.id, "In Progress")}
+                    >
+                      {updatingIds.includes(request.id) ? "Updating..." : "Start Work"}
                     </button>
                   )}
-                  {/* <button className="admin-dash-maintenance-button admin-dash-details-button">View Details</button> */}
+                  {request.status.toLowerCase() === "in progress" && (
+                    <button
+                      disabled={updatingIds.includes(request.id)}
+                      className="admin-dash-maintenance-button admin-dash-complete-button"
+                      onClick={() => updateIssueStatus(request.id, "Closed")}
+                    >
+                      {updatingIds.includes(request.id) ? "Updating..." : "Mark as Resolved"}
+                    </button>
+                  )}
                 </div>
               </div>
             ))
