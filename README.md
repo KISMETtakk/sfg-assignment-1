@@ -19,3 +19,124 @@
 ![image](https://github.com/user-attachments/assets/0bf31d86-830f-4c3c-9a8e-e2162fba778f)
 ![image](https://github.com/user-attachments/assets/4c2b7f57-1f98-4128-a9d7-bd02ab346396)
 ![image](https://github.com/user-attachments/assets/4c8657b8-2591-46b3-8867-325abe79fd1a)
+# Smart Campus Services Portal (Frontend)
+
+This is the **frontend** of the Smart Campus Services Portal, a web-based system that enables students, lecturers, and administrators to manage academic activities like consultation bookings, class timetables, maintenance reporting, and notification tracking.
+
+---
+
+## 🌐 Technologies Used
+
+* **React.js** (Functional Components + Hooks)
+* **Axios** for API calls
+* **React Router DOM** for navigation
+* **FontAwesome** and **React Icons** for UI icons
+* **CSS3** and **Custom Stylesheets** (Tailored per component)
+
+---
+
+## 🚀 Getting Started
+
+### 1. **Clone the Repository**
+
+```bash
+git clone https://github.com/your-username/smart-campus-frontend.git
+cd smart-campus-frontend
+```
+
+### 2. **Install Dependencies**
+
+```bash
+npm install
+```
+
+### 3. **Set Environment Variables**
+
+Create a `.env` file in the root directory:
+
+```env
+REACT_APP_API_BASE_URL=http://localhost:8180/api
+```
+
+### 4. **Run the Application**
+
+```bash
+npm start
+```
+
+This will open the app on `http://localhost:3000`
+
+---
+
+## 🎓 Features
+
+* **Student Dashboard**: View class/consultation timetables, submit maintenance issues, receive notifications.
+* **Lecturer Login**: Approve/cancel appointments, view personal modules.
+* **Admin Dashboard**: View/manage all appointments and maintenance issues.
+* **Calendar View**: Highlight booked appointments.
+* **Dynamic Timetable**: Weekly view for lecture modules.
+
+---
+
+## 🔗 API Integration
+
+This frontend consumes a Spring Boot RESTful API.
+Ensure the backend is running at:
+
+```
+http://localhost:8180/
+```
+
+APIs used include:
+
+* `GET /api/appointment/appointments`
+* `GET /api/timetable/view-all`
+* `POST /api/maintenance/create`
+* `PUT /api/appointment/update-status/{id}`
+
+---
+
+## 🏛️ Sample Credentials
+
+* **Student**: `johndoe@example.com / studentpass1`
+* **Lecturer**: `davidwilliams@example.com / lecturerpass1`
+* **Admin**: No frontend login yet (access via backend or Swagger)
+
+---
+
+## 📸 UI Screenshots
+
+Add screenshots inside a `screenshots/` folder:
+
+```
+- view-timetable.png
+- admin-dashboard.png
+- submit-maintenance.png
+- lecturer-login.png
+```
+
+---
+
+
+---
+
+## 🎨 UI Styling
+
+* All components are styled using modular or scoped CSS files.
+* Consistent color scheme (red & white theme for student UI, yellow & white for admin).
+* Responsive layout for desktop resolution (future: mobile support).
+
+---
+
+## 🚜 Future Improvements
+
+* JWT login persistence
+* Role-based protected routes
+* Pagination and filtering for maintenance cards
+* Admin user management page
+
+---
+
+## 💼 License
+
+This project is for academic demonstration purposes.
